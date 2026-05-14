@@ -1,0 +1,230 @@
+import 'package:flutter/material.dart';
+import 'models/track.dart';
+import 'models/choir.dart';
+import 'models/album.dart';
+
+/// Static mock data — replace with repository calls once the API is ready.
+class MockData {
+  MockData._();
+
+  static const String _img = 'https://picsum.photos/seed/';
+
+  // ── Choirs ─────────────────────────────────────────────────────────────────
+  static final List<Choir> choirs = [
+    Choir(
+      id: 'c1',
+      name: 'Kwaya ya Uinjilisti',
+      location: 'Dar es Salaam',
+      bio: 'Mojawapo ya kwaya bora zaidi nchini Tanzania, ikijulikana kwa sauti za kina na nyimbo za kiroho.',
+      imageUrl: '${_img}kwaya1/400/400',
+      albumCount: 8,
+      trackCount: 64,
+      isVerified: true,
+    ),
+    Choir(
+      id: 'c2',
+      name: 'Bwana Asifiwe Choir',
+      location: 'Arusha',
+      bio: 'Kwaya ya kisasa inayochanganya maudhui ya kale na mtindo wa kisasa.',
+      imageUrl: '${_img}kwaya2/400/400',
+      albumCount: 5,
+      trackCount: 40,
+      isVerified: true,
+    ),
+    Choir(
+      id: 'c3',
+      name: 'Sauti za Injili',
+      location: 'Mwanza',
+      bio: 'Kwaya ya ziwa inayoleta sauti za kiafrika kwenye nyimbo za Kikristo.',
+      imageUrl: '${_img}kwaya3/400/400',
+      albumCount: 3,
+      trackCount: 24,
+      isVerified: false,
+    ),
+    Choir(
+      id: 'c4',
+      name: 'Wimbo wa Amani',
+      location: 'Dodoma',
+      bio: 'Kwaya inayoimba nyimbo za amani na upendo kwa jamii.',
+      imageUrl: '${_img}kwaya4/400/400',
+      albumCount: 6,
+      trackCount: 48,
+      isVerified: true,
+    ),
+    Choir(
+      id: 'c5',
+      name: 'Agape Voices',
+      location: 'Moshi',
+      bio: 'Sauti za upendo kutoka miguuni mwa Kilimanjaro.',
+      imageUrl: '${_img}kwaya5/400/400',
+      albumCount: 4,
+      trackCount: 32,
+      isVerified: false,
+    ),
+  ];
+
+  // ── Albums ─────────────────────────────────────────────────────────────────
+  static final List<Album> albums = [
+    Album(
+      id: 'a1',
+      title: 'Neema ya Mungu',
+      choirName: 'Kwaya ya Uinjilisti',
+      coverUrl: '${_img}album1/400/400',
+      year: 2024,
+      trackCount: 10,
+      isPremium: false,
+      accentColor: const Color(0xFF7B5EA7),
+      genre: 'Kwaya',
+    ),
+    Album(
+      id: 'a2',
+      title: 'Milele na Milele',
+      choirName: 'Bwana Asifiwe Choir',
+      coverUrl: '${_img}album2/400/400',
+      year: 2023,
+      trackCount: 8,
+      isPremium: true,
+      accentColor: const Color(0xFFC8A96E),
+      genre: 'Gospel',
+    ),
+    Album(
+      id: 'a3',
+      title: 'Shangilia Bwana',
+      choirName: 'Sauti za Injili',
+      coverUrl: '${_img}album3/400/400',
+      year: 2024,
+      trackCount: 12,
+      isPremium: false,
+      accentColor: const Color(0xFF4C7B5E),
+      genre: 'Traditional',
+    ),
+    Album(
+      id: 'a4',
+      title: 'Furaha ya Milele',
+      choirName: 'Wimbo wa Amani',
+      coverUrl: '${_img}album4/400/400',
+      year: 2022,
+      trackCount: 9,
+      isPremium: true,
+      accentColor: const Color(0xFF7B3E3E),
+      genre: 'Taarab',
+    ),
+    Album(
+      id: 'a5',
+      title: 'Utukufu wa Mungu',
+      choirName: 'Agape Voices',
+      coverUrl: '${_img}album5/400/400',
+      year: 2023,
+      trackCount: 11,
+      isPremium: false,
+      accentColor: const Color(0xFF3E5E7B),
+      genre: 'Kwaya',
+    ),
+    Album(
+      id: 'a6',
+      title: 'Amina Kweli Kweli',
+      choirName: 'Kwaya ya Uinjilisti',
+      coverUrl: '${_img}album6/400/400',
+      year: 2021,
+      trackCount: 7,
+      isPremium: false,
+      accentColor: const Color(0xFF5E3E7B),
+      genre: 'Gospel',
+    ),
+  ];
+
+  // ── Tracks ─────────────────────────────────────────────────────────────────
+  static final List<Track> tracks = [
+    Track(
+      id: 't1',
+      title: 'Baba Yetu Uliye Mbinguni',
+      choirName: 'Kwaya ya Uinjilisti',
+      albumTitle: 'Neema ya Mungu',
+      coverUrl: '${_img}track1/400/400',
+      duration: const Duration(minutes: 4, seconds: 32),
+      isPremium: false,
+      accentColor: const Color(0xFF7B5EA7),
+    ),
+    Track(
+      id: 't2',
+      title: 'Mungu ni Mwema',
+      choirName: 'Bwana Asifiwe Choir',
+      albumTitle: 'Milele na Milele',
+      coverUrl: '${_img}track2/400/400',
+      duration: const Duration(minutes: 5, seconds: 12),
+      isPremium: true,
+      accentColor: const Color(0xFFC8A96E),
+    ),
+    Track(
+      id: 't3',
+      title: 'Yesu Ni Rafiki wa Kweli',
+      choirName: 'Sauti za Injili',
+      albumTitle: 'Shangilia Bwana',
+      coverUrl: '${_img}track3/400/400',
+      duration: const Duration(minutes: 3, seconds: 55),
+      isPremium: false,
+      accentColor: const Color(0xFF4C7B5E),
+    ),
+    Track(
+      id: 't4',
+      title: 'Asante Bwana Mungu',
+      choirName: 'Wimbo wa Amani',
+      albumTitle: 'Furaha ya Milele',
+      coverUrl: '${_img}track4/400/400',
+      duration: const Duration(minutes: 6, seconds: 18),
+      isPremium: true,
+      accentColor: const Color(0xFF7B3E3E),
+    ),
+    Track(
+      id: 't5',
+      title: 'Nguvu za Upendo Wake',
+      choirName: 'Agape Voices',
+      albumTitle: 'Utukufu wa Mungu',
+      coverUrl: '${_img}track5/400/400',
+      duration: const Duration(minutes: 4, seconds: 45),
+      isPremium: false,
+      accentColor: const Color(0xFF3E5E7B),
+    ),
+    Track(
+      id: 't6',
+      title: 'Bwana Ni Nani Kama Wewe',
+      choirName: 'Kwaya ya Uinjilisti',
+      albumTitle: 'Amina Kweli Kweli',
+      coverUrl: '${_img}track6/400/400',
+      duration: const Duration(minutes: 5, seconds: 28),
+      isPremium: false,
+      accentColor: const Color(0xFF5E3E7B),
+    ),
+    Track(
+      id: 't7',
+      title: 'Nakushukuru Mungu Wangu',
+      choirName: 'Bwana Asifiwe Choir',
+      albumTitle: 'Milele na Milele',
+      coverUrl: '${_img}track7/400/400',
+      duration: const Duration(minutes: 4, seconds: 10),
+      isPremium: false,
+      accentColor: const Color(0xFFC8A96E),
+    ),
+    Track(
+      id: 't8',
+      title: 'Sisi ni Watoto wa Mungu',
+      choirName: 'Sauti za Injili',
+      albumTitle: 'Shangilia Bwana',
+      coverUrl: '${_img}track8/400/400',
+      duration: const Duration(minutes: 3, seconds: 40),
+      isPremium: false,
+      accentColor: const Color(0xFF4C7B5E),
+    ),
+  ];
+
+  static const List<String> genres = [
+    'Zote',
+    'Kwaya',
+    'Gospel',
+    'Traditional',
+    'Taarab',
+    'Zaburi',
+    'Mhimni',
+    'Sifa',
+  ];
+}
