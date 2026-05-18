@@ -1,0 +1,237 @@
+
+/* YouTube Music Style Additions */
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon-inside {
+    position: absolute;
+    left: 16px;
+    color: var(--text-secondary);
+    font-size: 24px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 50%;
+}
+.search-clear-btn:hover {
+    background: var(--bg-elevated-hover);
+}
+
+.search-input-yt {
+    width: 100%;
+    min-width: 90vw;
+    padding: 14px 44px 14px 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.search-input-yt:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+/* Horizontal Carousels */
+.horizontal-carousel {
+    display: flex;
+    width: 92vw;
+    overflow-x: auto;
+    gap: 16px;
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+}
+.horizontal-carousel::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.carousel-item {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.carousel-item:hover {
+    transform: translateY(-4px);
+}
+
+.carousel-item.large {
+    width: 200px;
+}
+
+.carousel-cover {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-elevated);
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.carousel-cover.circle {
+    border-radius: 50%;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-info {
+    margin-top: 12px;
+}
+.carousel-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.carousel-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+.carousel-cover:hover .play-overlay {
+    opacity: 1;
+}
+.play-btn-circle {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Chips */
+.chips-container {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 24px;
+    scrollbar-width: none;
+}
+.chips-container::-webkit-scrollbar {
+    display: none;
+}
+.chip {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+.chip:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.chip.active {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+/* Top Result Card */
+.top-result-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    transition: background 0.2s ease;
+    cursor: pointer;
+    height: auto;
+}
+.top-result-card:hover {
+    background: rgba(255,255,255,0.08);
+}
+.top-result-cover {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.top-result-cover.rect {
+    border-radius: 8px;
+}
+.top-result-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+}
+.top-result-badge {
+    align-self: flex-start;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+@media (max-width: 768px) {
+    .search-results-grid {
+        grid-template-columns: 1fr;
+    }
+}

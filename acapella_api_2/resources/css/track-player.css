@@ -1,0 +1,135 @@
+@import './theme.css';
+
+.track-player {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.track-player-nav-button {
+    width: 100%;
+    padding: 20px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.track-player-nav-button-back-btn {
+    padding: 8px;
+}
+
+@media (max-width: 768px) {
+    .track-player-nav-button {
+        padding: 0px;
+        margin-bottom: 14px;
+    }
+}
+
+.track-player-nav-button button,
+.track-player-controls button {
+    border: none;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+}
+
+.track-player-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.track-player-controls .track-player-control {
+    flex: 1 1 auto;
+    padding: 20px;
+}
+
+.track-player-controls button {
+    border: none;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.track-player-controls button.active {
+    color: #9333ea;
+}
+
+.track-player-controls button:hover {
+    color: #9333ea;
+}
+
+.track-player-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.custom-track-player {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.track-progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.track-progress-fill {
+    height: 100%;
+    background: #9333ea;
+    border-radius: 2px;
+    transition: width 0.1s ease;
+    position: relative;
+}
+
+.track-progress-fill::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: #9333ea;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(147, 51, 234, 0.8);
+    pointer-events: none;
+}
+
+.track-time-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+}
+
+.current-time,
+.total-time {
+    font-weight: 500;
+}
+
+.controls-divider {
+    width: 2px;
+    height: 22px;
+    background: rgba(255,255,255,0.15);
+    margin: 20px 12px 0;
+    border-radius: 1px;
+    align-self: stretch;
+}

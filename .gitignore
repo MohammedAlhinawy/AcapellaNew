@@ -49,3 +49,10 @@ coverage/
 *.pid
 *.seed
 *.pid.lock
+
+## Files in the root
+pages.md
+mongike_*.md
+PropertyController.php
+index.html
+DEPLOYMENT.md

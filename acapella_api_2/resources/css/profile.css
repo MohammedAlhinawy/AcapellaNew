@@ -1,0 +1,605 @@
+@import './theme.css';
+
+/* Luxury Profile Settings Styles */
+
+.listener-header {
+    margin-bottom: 1.2rem;
+}
+
+/* Luxury Card Design */
+.luxury-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    backdrop-filter: blur(20px);
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.luxury-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+/* Luxury Card Header */
+.luxury-card-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 32px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Luxury Avatar */
+.luxury-avatar {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 
+        0 4px 20px rgba(102, 126, 234, 0.4),
+        0 0 0 3px rgba(102, 126, 234, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+}
+
+/* Luxury Icon Wrapper */
+.luxury-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.luxury-icon {
+    font-size: 32px;
+    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.5));
+}
+
+/* Luxury User Info */
+.luxury-user-info {
+    flex: 1;
+}
+
+.luxury-user-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.luxury-user-email {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+}
+
+.luxury-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.luxury-card-subtitle {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 400;
+}
+
+/* Luxury Badge */
+.luxury-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.luxury-badge.premium {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.luxury-badge.free {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Luxury Card Body */
+.luxury-card-body {
+    padding: 32px;
+}
+
+/* Luxury Info Grid */
+.luxury-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+}
+
+.luxury-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.luxury-info-item-language {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Luxury Selector Container */
+.luxury-selector-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+}
+
+/* Luxury Selector Button */
+.luxury-selector-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    min-width: 130px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.luxury-selector-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.luxury-selector-button:active {
+    transform: scale(0.98);
+}
+
+.luxury-selector-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.luxury-selector-arrow {
+    font-size: 12px;
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+}
+
+.luxury-selector-arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Luxury Selector Dropdown */
+.luxury-selector-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    overflow: hidden;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Luxury Selector Option */
+.luxury-selector-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.luxury-selector-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 1);
+}
+
+.luxury-selector-option.selected {
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+}
+
+.luxury-selector-option-flag {
+    font-size: 18px;
+}
+
+.luxury-selector-option-name {
+    flex: 1;
+    text-align: left;
+}
+
+.luxury-selector-option-check {
+    font-size: 14px;
+    color: #FFD700;
+}
+
+.luxury-info-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.luxury-info-value {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Luxury Card Footer */
+.luxury-card-footer {
+    padding: 24px 32px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, transparent 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Luxury Buttons */
+.luxury-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    flex: 1;
+    min-width: 140px;
+}
+
+.luxury-button span {
+    font-size: 16px;
+}
+
+.luxury-button-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.luxury-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.5);
+}
+
+.luxury-button-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.luxury-button-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.luxury-button-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: rgba(239, 68, 68, 0.9);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.luxury-button-danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.luxury-button-gold {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    flex: none;
+    width: 100%;
+}
+
+.luxury-button-gold:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.6);
+}
+
+/* Luxury Premium Active */
+.luxury-premium-active {
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.luxury-premium-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.luxury-premium-text {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* Luxury Upgrade CTA */
+.luxury-upgrade-cta {
+    text-align: center;
+    padding: 24px;
+}
+
+.luxury-upgrade-text {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* Settings Content */
+/* .settings-content {
+    max-width: 700px;
+} */
+
+/* Danger Zone Card */
+.luxury-card-danger {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.luxury-card-danger:hover {
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 
+        0 16px 48px rgba(239, 68, 68, 0.2),
+        0 0 0 1px rgba(239, 68, 68, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.luxury-icon-danger {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.luxury-danger-text {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+}
+
+.luxury-button-danger-full {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.1) 100%);
+    color: rgba(239, 68, 68, 0.9);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    flex: none;
+    width: 100%;
+}
+
+.luxury-button-danger-full:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.2) 100%);
+    border-color: rgba(239, 68, 68, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+}
+
+/* Logout Section */
+.settings-logout-section {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.luxury-button-logout {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    flex: none;
+    width: 100%;
+}
+
+.luxury-button-logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .luxury-card-header {
+        padding: 24px;
+        gap: 16px;
+    }
+
+    .luxury-avatar,
+    .luxury-icon-wrapper {
+        width: 56px;
+        height: 56px;
+    }
+
+    .luxury-avatar {
+        font-size: 24px;
+    }
+
+    .luxury-icon {
+        font-size: 28px;
+    }
+
+    .luxury-user-name {
+        font-size: 20px;
+    }
+
+    .luxury-card-title {
+        font-size: 18px;
+    }
+
+    .luxury-card-body {
+        padding: 24px;
+    }
+
+    .luxury-info-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .luxury-card-footer {
+        padding: 16px 24px;
+        flex-direction: column;
+    }
+
+    .luxury-button {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .luxury-premium-active,
+    .luxury-upgrade-cta {
+        padding: 16px;
+    }
+
+    .settings-content {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .luxury-card-header {
+        padding: 20px;
+        gap: 12px;
+    }
+
+    .luxury-avatar,
+    .luxury-icon-wrapper {
+        width: 48px;
+        height: 48px;
+    }
+
+    .luxury-avatar {
+        font-size: 20px;
+    }
+
+    .luxury-icon {
+        font-size: 24px;
+    }
+
+    .luxury-user-name,
+    .luxury-card-title {
+        font-size: 16px;
+    }
+
+    .luxury-user-email,
+    .luxury-card-subtitle {
+        font-size: 12px;
+    }
+
+    .luxury-badge {
+        padding: 6px 12px;
+        font-size: 10px;
+    }
+
+    .luxury-card-body {
+        padding: 20px;
+    }
+
+    .luxury-info-label {
+        font-size: 11px;
+    }
+
+    .luxury-info-value {
+        font-size: 14px;
+    }
+
+    .luxury-button {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .luxury-button span {
+        font-size: 14px;
+    }
+
+    .luxury-premium-badge {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+
+    .luxury-premium-text,
+    .luxury-upgrade-text {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,368 @@
+@import './theme.css';
+
+/* ============================================================
+ * Manager Requests — luxury styling
+ * Used by BecomeChoirManager, SubmitManagerRequest,
+ * RequestManagement, RequestView pages.
+ * ============================================================ */
+
+.req-page {
+    min-height: 100vh;
+    padding: 96px 24px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: var(--text-primary);
+}
+
+.req-page.reply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.req-page.narrow {
+    max-width: 760px;
+}
+
+.req-hero {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.req-hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.req-hero p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.req-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(102, 126, 234, 0.12);
+    border: 1px solid var(--border-accent);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 18px;
+}
+
+/* ── Form Card ──────────────────────────────────────────── */
+.req-form-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: 36px 32px;
+    box-shadow: var(--shadow-lg);
+}
+
+.req-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.req-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+.req-form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.req-form-input,
+.req-form-textarea,
+.req-form-select {
+    width: 100%;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+}
+
+.req-form-input:focus,
+.req-form-textarea:focus,
+.req-form-select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow);
+}
+
+.req-form-textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.req-form-help {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.req-form-error {
+    font-size: 0.8rem;
+    color: var(--error);
+    margin-top: 4px;
+}
+
+.req-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.req-btn {
+    background: var(--accent-gradient);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.req-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.req-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.req-btn.ghost {
+    background: transparent;
+    border: 1px solid var(--border-primary);
+    color: var(--text-secondary);
+}
+
+.req-btn.ghost:hover {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+}
+
+.req-btn.danger {
+    background: var(--error);
+}
+
+.req-btn.success {
+    background: var(--success);
+}
+
+/* ── Info / Marketing Card ───────────────────────────────── */
+.req-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+}
+
+.req-info-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    transition: all var(--transition-normal);
+}
+
+.req-info-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-accent);
+}
+
+.req-info-card .icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-gradient);
+    color: white;
+    margin-bottom: 16px;
+}
+
+.req-info-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.req-info-card p {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.req-cta {
+    text-align: center;
+    margin-top: 32px;
+}
+
+/* ── Admin Table / List ──────────────────────────────────── */
+.req-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.req-toolbar .req-form-input,
+.req-toolbar .req-form-select {
+    max-width: 240px;
+}
+
+.req-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.req-table th,
+.req-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-secondary);
+    font-size: 0.92rem;
+}
+
+.req-table th {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+}
+
+.req-table tr:last-child td {
+    border-bottom: none;
+}
+
+.req-table tr:hover td {
+    background: var(--bg-elevated);
+}
+
+.req-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.req-status.pending {
+    background: var(--warning-bg);
+    color: var(--warning);
+    border: 1px solid var(--warning-border);
+}
+
+.req-status.approved {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid var(--success-border);
+}
+
+.req-status.rejected {
+    background: var(--error-bg);
+    color: var(--error);
+    border: 1px solid var(--error-border);
+}
+
+/* ── Detail View ─────────────────────────────────────────── */
+.req-detail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.req-detail-card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+}
+
+.req-detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-secondary);
+    font-size: 0.92rem;
+}
+
+.req-detail-row:last-child {
+    border-bottom: none;
+}
+
+.req-detail-row .label {
+    color: var(--text-tertiary);
+}
+
+.req-detail-row .value {
+    color: var(--text-primary);
+    font-weight: 500;
+    text-align: right;
+}
+
+.req-prose {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    margin-top: 8px;
+}
+
+.req-empty {
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--text-tertiary);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .req-page { padding: 80px 16px 64px; }
+    .req-form-card { padding: 24px 18px; }
+    .req-form-row { grid-template-columns: 1fr; }
+    .req-detail-grid { grid-template-columns: 1fr; }
+    .req-table th, .req-table td { padding: 10px 12px; font-size: 0.85rem; }
+    .req-table .hide-mobile { display: none; }
+}
