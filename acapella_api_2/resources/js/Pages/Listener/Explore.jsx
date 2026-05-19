@@ -11,8 +11,10 @@ import SheetTrackDropdown from '../../Components/SheetTrackDropdown';
 import useDebounce from '../../Hooks/useDebounce';
 import '../../../css/listener.css';
 import '../../../css/yt-music.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Explore() {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const debouncedSearchQuery = useDebounce(searchQuery, 400);
     
@@ -32,7 +34,12 @@ export default function Explore() {
     const [searchLoading, setSearchLoading] = useState(false);
     const [activeMenu, setActiveMenu] = useState(null);
 
-    const filters = ['All', 'Tracks', 'Choirs', 'Albums']; // 'Premium', 'Free' commented out
+    const filters = [
+        { key: 'All', label: t('explore.all') },
+        { key: 'Tracks', label: t('explore.tracks') },
+        { key: 'Choirs', label: t('explore.choirs') },
+        { key: 'Albums', label: t('explore.albums') },
+    ]; // 'Premium', 'Free' commented out
     const searchInputRef = useRef(null);
 
     // Load Default Data on Mount
@@ -49,13 +56,14 @@ export default function Explore() {
                 setChoirs(choirsData.data || []);
                 setAlbums(albumsData.data || []);
             } catch {
-                toast.error('Failed to load explore content');
+                toast.error(t('explore.failed_to_load'));
             } finally {
                 setLoading(false);
             }
         };
 
         fetchDefaultData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Handle Debounced Search (Client-side)
@@ -133,7 +141,7 @@ export default function Explore() {
                             </div>
                             <div className="carousel-info">
                                 <div className="carousel-title">{item.title}</div>
-                                <div className="carousel-subtitle">{item.album?.title || 'Unknown Album'}</div>
+                                <div className="carousel-subtitle">{item.album?.title || t('album.unknown_album')}</div>
                             </div>
                         </div>
                     ))}
@@ -207,7 +215,7 @@ export default function Explore() {
     };
 
     const renderSearchResults = () => {
-        if (searchLoading) return <div className="loading-state">Searching...</div>;
+        if (searchLoading) return <div className="loading-state">{t('explore.searching')}</div>;
 
         // Top Result heuristic
         let topResult = null;
@@ -216,14 +224,14 @@ export default function Explore() {
         else if (searchTracks.length > 0) { topResult = searchTracks[0]; topResultType = 'track'; }
         else if (searchAlbums.length > 0) { topResult = searchAlbums[0]; topResultType = 'album'; }
 
-        if (!topResult) return <div className="empty-state">No results found for &ldquo;{searchQuery}&rdquo;</div>;
+        if (!topResult) return <div className="empty-state">{t('explore.no_results')} &ldquo;{searchQuery}&rdquo;</div>;
 
         return (
             <div className="search-results">
                 <div className="search-results-grid">
                     {/* Top Result */}
                     <div className="section">
-                        <h2 className="section-title">Top Result</h2>
+                        <h2 className="section-title">{t('explore.top_result')}</h2>
                         <div className="top-result-card" onClick={() => handleCardClick(topResult, topResultType)}>
                             <div className={`top-result-cover ${topResultType === 'choir' ? '' : 'rect'}`}>
                                 {(topResult.image_path || topResult.cover_path) ? (
@@ -245,7 +253,7 @@ export default function Explore() {
 
                     {/* Songs List */}
                     <div className="section">
-                        <h2 className="section-title">Songs</h2>
+                        <h2 className="section-title">{t('explore.songs')}</h2>
                         <div className="track-list" style={{ gap: '8px' }}>
                             {searchTracks.slice(0, 4).map(track => (
                                 <div key={track.id} className="track-item" onClick={() => handleCardClick(track, 'track')}>
@@ -275,8 +283,8 @@ export default function Explore() {
                 </div>
 
                 {/* Categories */}
-                {renderAlbumCarousel(searchAlbums, 'Albums')}
-                {renderChoirCarousel(searchChoirs, 'Choirs')}
+                {renderAlbumCarousel(searchAlbums, t('explore.albums'))}
+                {renderChoirCarousel(searchChoirs, t('explore.choirs'))}
             </div>
         );
     };
@@ -285,14 +293,14 @@ export default function Explore() {
         <MainLayout>
             <div className="listener-page">
                 <div className="listener-header">
-                    <h1 className="listener-header h1" style={{ marginBottom: 24 }}>Explore</h1>
+                    <h1 className="listener-header h1" style={{ marginBottom: 24 }}>{t('explore.explore')}</h1>
                     
                     <div className="search-container">
                         <MdSearch className="search-icon-inside" />
                         <input 
                             ref={searchInputRef}
                             type="text" 
-                            placeholder="Search for tracks, choirs, or albums..." 
+                            placeholder={t('explore.search_placeholder')} 
                             className="search-input-yt"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -309,11 +317,11 @@ export default function Explore() {
                     <div className="chips-container">
                         {filters.map((filter) => (
                             <div 
-                                key={filter}
-                                className={`chip ${activeFilter === filter ? 'active' : ''}`}
-                                onClick={() => handleFilter(filter)}
+                                key={filter.key}
+                                className={`chip ${activeFilter === filter.key ? 'active' : ''}`}
+                                onClick={() => handleFilter(filter.key)}
                             >
-                                {filter}
+                                {filter.label}
                             </div>
                         ))}
                     </div>
@@ -323,17 +331,17 @@ export default function Explore() {
                     {isSearching ? (
                         renderSearchResults()
                     ) : loading ? (
-                        <div className="loading-state">Loading explore...</div>
+                        <div className="loading-state">{t('explore.loading')}</div>
                     ) : (
                         <>
-                            {(activeFilter === 'All' || activeFilter === 'Tracks') && renderTrackCarousel(newlyAddedTracks, 'Newly Added Tracks')}
-                            {(activeFilter === 'All' || activeFilter === 'Albums') && renderAlbumCarousel(newlyAddedAlbums, 'New Releases')}
-                            {(activeFilter === 'All' || activeFilter === 'Choirs') && renderChoirCarousel(trendingChoirs, 'Trending Choirs')}
+                            {(activeFilter === 'All' || activeFilter === 'Tracks') && renderTrackCarousel(newlyAddedTracks, t('explore.newly_added_tracks'))}
+                            {(activeFilter === 'All' || activeFilter === 'Albums') && renderAlbumCarousel(newlyAddedAlbums, t('explore.new_releases'))}
+                            {(activeFilter === 'All' || activeFilter === 'Choirs') && renderChoirCarousel(trendingChoirs, t('explore.trending_choirs'))}
                             
                             {/* Fallback to full list if filtered */}
                             {activeFilter !== 'All' && (
                                 <div className="section" style={{ marginTop: 32 }}>
-                                    <h2 className="section-title">All {activeFilter}</h2>
+                                    <h2 className="section-title">{t('explore.all')} {activeFilter}</h2>
                                     <div className="card-grid">
                                         {/* Simplified generic grid fallback for old filtered logic */}
                                         {activeFilter === 'Tracks' && tracks.map(item => (

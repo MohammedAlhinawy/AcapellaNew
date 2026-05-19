@@ -8,8 +8,10 @@ import { toast } from '../../Components/ToastContainer';
 import SheetTrackDropdown from '../../Components/SheetTrackDropdown';
 import CustomInputAlert from '../../Components/CustomInputAlert';
 import '../../../css/listener.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Library() {
+    const { t } = useTranslation();
     const [likedTracks, setLikedTracks] = useState([]);
     const [playlists, setPlaylists] = useState([]);
     const [activeTab, setActiveTab] = useState('liked');
@@ -38,7 +40,7 @@ export default function Library() {
                 setLikedTracks(tracks);
             } catch (error) {
                 console.error('Error fetching liked tracks:', error);
-                toast.error('Failed to load liked songs');
+                toast.error(t('library.failed_to_load_liked'));
             } finally {
                 setLoading(false);
             }
@@ -50,7 +52,7 @@ export default function Library() {
                 setPlaylists(response.data || response);
             } catch (error) {
                 console.error('Error fetching playlists:', error);
-                toast.error('Failed to load playlists');
+                toast.error(t('library.failed_to_load_playlists'));
             } finally {
                 setLoading(false);
             }
@@ -61,7 +63,7 @@ export default function Library() {
         } else {
             fetchPlaylists();
         }
-    }, [activeTab]);
+    }, [activeTab, t]);
 
     const handleUnlikeSuccess = () => {
         console.log('Unlike success, refreshing liked tracks...');
@@ -86,12 +88,12 @@ export default function Library() {
         if (!name || !name.trim()) return;
         try {
             await playlistService.createPlaylist({ name: name.trim() });
-            toast.success('Playlist created');
+            toast.success(t('library.playlist_created'));
             const response = await playlistService.getPlaylists();
             setPlaylists(response.data || response);
         } catch (error) {
             console.error('Error creating playlist:', error);
-            toast.error('Failed to create playlist');
+            toast.error(t('library.failed_to_create_playlist'));
         }
     };
 
@@ -99,8 +101,8 @@ export default function Library() {
         <MainLayout>
             <div className="listener-page">
                 <div className="listener-header">
-                    <h1 className="listener-header h1">Your Library</h1>
-                    <p className="listener-header p">All your liked songs and playlists in one place</p>
+                    <h1 className="listener-header h1">{t('library.title')}</h1>
+                    <p className="listener-header p">{t('library.subtitle')}</p>
                 </div>
 
                 <div className="library-tabs">
@@ -108,13 +110,13 @@ export default function Library() {
                         className={`library-tab ${activeTab === 'liked' ? 'active' : ''}`}
                         onClick={() => setActiveTab('liked')}
                     >
-                        Liked
+                        {t('library.liked')}
                     </button>
                     <button 
                         className={`library-tab ${activeTab === 'playlist' ? 'active' : ''}`}
                         onClick={() => setActiveTab('playlist')}
                     >
-                        PlayList
+                        {t('library.playlist')}
                     </button>
                 </div>
 
@@ -132,10 +134,10 @@ export default function Library() {
                             >
                                 <div style={{ fontSize: '56px', marginBottom: '12px' }}>✦</div>
                                 <h2 style={{ color: '#fff', marginBottom: '8px', fontSize: '1.6rem' }}>
-                                    {activeTab === 'liked' ? 'Liked Songs are Premium' : 'Playlists are Premium'}
+                                    {activeTab === 'liked' ? t('library.liked_songs_premium') : t('library.playlists_premium')}
                                 </h2>
                                 <p style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '480px', margin: '0 auto 24px' }}>
-                                    Upgrade to Premium to {activeTab === 'liked' ? 'like songs and access your liked library' : 'create and manage personal playlists'}, download tracks, and enjoy ad-free background play.
+                                    {t('library.upgrade_premium_full', { action: activeTab === 'liked' ? t('library.upgrade_premium_liked') : t('library.upgrade_premium_playlist') })}
                                 </p>
                                 <button
                                     onClick={() => router.visit('/payments?plan=monthly')}
@@ -152,7 +154,7 @@ export default function Library() {
                                         marginBottom: '12px',
                                     }}
                                 >
-                                    ✦ Upgrade to Premium
+                                    ✦ {t('library.upgrade_premium')}
                                 </button>
                                 <button
                                     onClick={() => router.visit('/donate')}
@@ -167,16 +169,16 @@ export default function Library() {
                                         fontSize: '0.95rem',
                                     }}
                                 >
-                                    ☕ Buy Us a Coffee
+                                    ☕ {t('library.buy_coffee')}
                                 </button>
                             </div>
                         </div>
                     ) : activeTab === 'liked' ? (
                         <div className="section">
-                            <h2 className="section-title">Liked Songs</h2>
+                            <h2 className="section-title">{t('library.liked_songs')}</h2>
                             <div className="track-list">
                                 {loading ? (
-                                    <div className="loading-state">Loading liked songs...</div>
+                                    <div className="loading-state">{t('library.loading_liked')}</div>
                                 ) : likedTracks.length > 0 ? (
                                     likedTracks.map((track) => (
                                         <div key={track.id} className="track-item" onClick={() => router.get(`/play-track/${track.id}`)}>
@@ -190,12 +192,12 @@ export default function Library() {
                                                 )}
                                             </div>
                                             <div className="track-info">
-                                                <span className="track-name">{track?.title || 'Unknown Track'}</span>
-                                                <span className="track-album">{track?.album?.title || 'Unknown Album'} • <span className="track-duration">{track?.duration_label || '0:00'}</span></span>
+                                                <span className="track-name">{track?.title || t('album.unknown_track')}</span>
+                                                <span className="track-album">{track?.album?.title || t('album.unknown_album')} • <span className="track-duration">{track?.duration_label || '0:00'}</span></span>
                                             </div>
                                             
                                             {track?.is_premium && (
-                                                <span className="premium-badge">Premium</span>
+                                                <span className="premium-badge">{t('album.premium')}</span>
                                             )}
                                             
                                             <SheetTrackDropdown 
@@ -209,7 +211,7 @@ export default function Library() {
                                     ))
                                 ) : (
                                     <div className="empty-state">
-                                        <p>No liked songs yet</p>
+                                        <p>{t('library.no_liked_songs')}</p>
                                     </div>
                                 )}
                             </div>
@@ -217,7 +219,7 @@ export default function Library() {
                     ) : (
                         <div className="section">
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                                <h2 className="section-title" style={{ margin: 0 }}>Your Playlists</h2>
+                                <h2 className="section-title" style={{ margin: 0 }}>{t('library.your_playlists')}</h2>
                                 <button
                                     onClick={handleCreatePlaylist}
                                     style={{
@@ -231,24 +233,24 @@ export default function Library() {
                                         fontSize: '0.9rem',
                                     }}
                                 >
-                                    + New Playlist
+                                    {t('library.new_playlist')}
                                 </button>
 
                                 <CustomInputAlert
                                     isOpen={isCreatePlaylistOpen}
                                     onClose={() => setIsCreatePlaylistOpen(false)}
                                     onConfirm={confirmCreatePlaylist}
-                                    title="Create Playlist"
-                                    message="Enter a name for your new playlist:"
-                                    placeholder="My Awesome Playlist"
-                                    confirmText="Create"
-                                    cancelText="Cancel"
+                                    title={t('library.create_playlist')}
+                                    message={t('library.playlist_name_placeholder')}
+                                    placeholder={t('library.playlist_name_example')}
+                                    confirmText={t('library.create')}
+                                    cancelText={t('common.cancel')}
                                     type="primary"
                                 />
                             </div>
                             <div className="track-list">
                                 {loading ? (
-                                    <div className="loading-state">Loading playlists...</div>
+                                    <div className="loading-state">{t('library.loading_playlists')}</div>
                                 ) : playlists.length > 0 ? (
                                     playlists.map((playlist) => (
                                         <div
@@ -268,13 +270,13 @@ export default function Library() {
                                             </div>
                                             <div className="track-info">
                                                 <span className="track-name">{playlist.name}</span>
-                                                <span className="track-duration">{playlist.tracks_count || 0} tracks</span>
+                                                <span className="track-duration">{playlist.tracks_count || 0} {t('library.tracks_count')}</span>
                                             </div>
                                         </div>
                                     ))
                                 ) : (
                                     <div className="empty-state">
-                                        <p>No playlists yet</p>
+                                        <p>{t('library.no_playlists')}</p>
                                     </div>
                                 )}
                             </div>

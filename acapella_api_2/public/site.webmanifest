@@ -1,7 +1,7 @@
 {
-  "name": "Acapella",
+  "name": "Acapella - Tanzanian Kwaya Music",
   "short_name": "Acapella",
-  "description": "Premium Christian choral music streaming ecosystem.",
+  "description": "Stream authentic Tanzanian Christian Kwaya music. Support local choirs directly through mobile money subscriptions.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

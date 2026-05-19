@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import useTranslation from '../hooks/useTranslation';
 
-export default function AlbumComboBox({ albums, value, onChange, placeholder = 'Search albums...' }) {
+export default function AlbumComboBox({ albums, value, onChange, placeholder }) {
+    const { t } = useTranslation();
+    const finalPlaceholder = placeholder || t('common.search_albums');
     const [searchTerm, setSearchTerm] = useState('');
     const [isFocused, setIsFocused] = useState(false);
     const dropdownRef = useRef(null);
@@ -62,7 +65,7 @@ export default function AlbumComboBox({ albums, value, onChange, placeholder = '
             }}>
                 <input
                     type="text"
-                    placeholder={placeholder}
+                    placeholder={finalPlaceholder}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onFocus={handleFocus}
@@ -227,7 +230,7 @@ export default function AlbumComboBox({ albums, value, onChange, placeholder = '
                                     padding: '4px 8px',
                                     borderRadius: '4px',
                                 }}>
-                                    Premium
+                                    {t('common.premium')}
                                 </span>
                             )}
                         </div>
@@ -253,7 +256,7 @@ export default function AlbumComboBox({ albums, value, onChange, placeholder = '
                         zIndex: 1000,
                     }}
                 >
-                    No albums found
+                    {t('common.no_albums_found')}
                 </div>
             )}
         </div>

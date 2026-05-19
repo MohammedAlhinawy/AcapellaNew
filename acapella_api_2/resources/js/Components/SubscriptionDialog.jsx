@@ -1,41 +1,43 @@
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
-
-const PLANS = {
-    monthly: {
-        name: 'Monthly',
-        price: 5000,
-        currency: 'TZS',
-        period: 'per month',
-        features: [
-            'Unlimited music streaming',
-            'Download for offline listening',
-            'Ad-free experience',
-            'High quality audio',
-        ],
-    },
-    yearly: {
-        name: 'Yearly',
-        price: 50000,
-        currency: 'TZS',
-        period: 'per year',
-        features: [
-            'All monthly features',
-            'Save 16% compared to monthly',
-            'Priority support',
-            'Early access to new releases',
-        ],
-    },
-};
+import useTranslation from '../hooks/useTranslation';
 
 export default function SubscriptionDialog({ isOpen, onClose, onSelectPlan }) {
+    const { t } = useTranslation();
+    
+    const PLANS = {
+        monthly: {
+            name: t('dialog.monthly'),
+            price: 5000,
+            currency: 'TZS',
+            period: t('dialog.per_month'),
+            features: [
+                t('dialog.feature_unlimited'),
+                t('dialog.feature_download'),
+                t('dialog.feature_ad_free'),
+                t('dialog.feature_high_quality'),
+            ],
+        },
+        yearly: {
+            name: t('dialog.yearly'),
+            price: 50000,
+            currency: 'TZS',
+            period: t('dialog.per_year'),
+            features: [
+                t('dialog.feature_monthly_features'),
+                t('dialog.feature_save_percent'),
+                t('dialog.feature_priority_support'),
+                t('dialog.feature_early_access'),
+            ],
+        },
+    };
     if (!isOpen) return null;
 
     return (
         <div className="dialog-overlay">
             <div className="dialog-container" style={{ maxWidth: '700px' }}>
                 <div className="dialog-header">
-                    <h2>Choose Your Plan</h2>
+                    <h2>{t('dialog.choose_plan')}</h2>
                     <button onClick={onClose} className="dialog-close-button">×</button>
                 </div>
                 <div className="dialog-form" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }}>

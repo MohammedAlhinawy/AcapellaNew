@@ -9,9 +9,11 @@ import CustomTrackPlayer from '../../Components/CustomTrackPlayer';
 import SheetTrackDropdown from '../../Components/SheetTrackDropdown';
 import '../../../css/listener.css';
 import '../../../css/track-player.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function PlayTrack() {
     const { props } = usePage();
+    const { t } = useTranslation();
     const { currentTrack, playTrack } = useAudio();
     const [track, setTrack] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -43,7 +45,7 @@ export default function PlayTrack() {
                     currentTrackIdRef.current = trackData.id;
                 }
             } catch {
-                toast.error('Failed to load track');
+                toast.error(t('play_track.failed_to_load'));
             } finally {
                 setLoading(false);
             }
@@ -148,7 +150,7 @@ export default function PlayTrack() {
         return (
             <MainLayout>
                 <div className="listener-page">
-                    <div className="loading-state">Loading track...</div>
+                    <div className="loading-state">{t('play_track.loading')}</div>
                 </div>
             </MainLayout>
         );
@@ -159,7 +161,7 @@ export default function PlayTrack() {
             <MainLayout>
                 <div className="listener-page">
                     <div className="empty-state">
-                        <p>Track not found</p>
+                        <p>{t('play_track.not_found')}</p>
                     </div>
                 </div>
             </MainLayout>
@@ -189,21 +191,21 @@ export default function PlayTrack() {
                             <span>🎵</span>
                         </div>
                     )}
-                    {track.is_premium && <span className="track-player-badge premium">Premium</span>}
+                    {track.is_premium && <span className="track-player-badge premium">{t('album.premium')}</span>}
                 </div>
 
                 <div className="track-player-info">
-                    <h1 className="track-player-title">{track.title || 'Unknown Track'}</h1>
+                    <h1 className="track-player-title">{track.title || t('play_track.unknown_track')}</h1>
                     <CustomTrackPlayer src={track.file_path} duration={track.duration_sec} />
                 </div>
 
                 <div className="track-player-controls">
                     <button className='track-player-control up-next' onClick={() => toggleSheet('up-next')}>
-                        Up next
+                        {t('play_track.up_next')}
                     </button>
                     <div className='controls-divider'></div>
                     <button className='track-player-control related' onClick={() => toggleSheet('related')}>
-                        Related
+                        {t('play_track.related')}
                     </button>
                 </div>
             </div>
@@ -228,18 +230,18 @@ export default function PlayTrack() {
                                 className={`sheet-tab ${activeTab === 'up-next' ? 'active' : ''}`}
                                 onClick={() => { setActiveTab('up-next'); fetchSheetData('up-next'); }}
                             >
-                                Up next
+                                {t('play_track.up_next')}
                             </button>
                             <button 
                                 className={`sheet-tab ${activeTab === 'related' ? 'active' : ''}`}
                                 onClick={() => { setActiveTab('related'); fetchSheetData('related'); }}
                             >
-                                Related
+                                {t('play_track.related')}
                             </button>
                         </div>
                         <div className="sheet-content">
                             {sheetLoading ? (
-                                <div className="sheet-loading">Loading...</div>
+                                <div className="sheet-loading">{t('play_track.loading_sheet')}</div>
                             ) : activeTab === 'up-next' ? (
                                 queue.length > 0 ? (
                                     queue.map((queueItem) => (
@@ -258,7 +260,7 @@ export default function PlayTrack() {
                                                 )}
                                             </div>
                                             <div className="sheet-track-info">
-                                                <h4>{queueItem.track.title || 'Unknown Track'}</h4>
+                                                <h4>{queueItem.track.title || t('play_track.unknown_track')}</h4>
                                                 <p>{queueItem.track.duration_label || '0:00'}</p>
                                             </div>
                                             <SheetTrackDropdown 
@@ -270,7 +272,7 @@ export default function PlayTrack() {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="sheet-empty">Queue is empty</div>
+                                    <div className="sheet-empty">{t('play_track.queue_empty')}</div>
                                 )
                             ) : (
                                 relatedTracks.length > 0 ? (
@@ -278,13 +280,13 @@ export default function PlayTrack() {
                                         // Derive a smart-recommendation reason chip
                                         let reason = null;
                                         if (track && relatedTrack.choir_id && relatedTrack.choir_id === track.choir_id) {
-                                            reason = { label: 'Same artist', color: '#9333ea' };
+                                            reason = { label: t('play_track.same_artist'), color: '#9333ea' };
                                         } else if (track && relatedTrack.album_id && relatedTrack.album_id === track.album_id) {
-                                            reason = { label: 'From this album', color: '#0ea5e9' };
+                                            reason = { label: t('play_track.from_album'), color: '#0ea5e9' };
                                         } else if (Number(relatedTrack.score) >= 3) {
-                                            reason = { label: 'You may like', color: '#10b981' };
+                                            reason = { label: t('play_track.you_may_like'), color: '#10b981' };
                                         } else {
-                                            reason = { label: 'Popular', color: '#f59e0b' };
+                                            reason = { label: t('play_track.popular'), color: '#f59e0b' };
                                         }
 
                                         return (
@@ -308,7 +310,7 @@ export default function PlayTrack() {
                                                 className="sheet-track-info"
                                                 onClick={() => { playTrack(relatedTrack); setSheetOpen(false); }}
                                             >
-                                                <h4>{relatedTrack.title || 'Unknown Track'}</h4>
+                                                <h4>{relatedTrack.title || t('play_track.unknown_track')}</h4>
                                                 <p style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                                                     <span
                                                         className="recommendation-chip"
@@ -340,7 +342,7 @@ export default function PlayTrack() {
                                         );
                                     })
                                 ) : (
-                                    <div className="sheet-empty">No related tracks available</div>
+                                    <div className="sheet-empty">{t('play_track.no_related')}</div>
                                 )
                             )}
                         </div>

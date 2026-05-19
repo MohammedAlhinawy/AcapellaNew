@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import '../../css/dialog.css';
 import CustomAudioPlayer from './CustomAudioPlayer';
 import AlbumComboBox from './AlbumComboBox';
+import useTranslation from '../hooks/useTranslation';
 
 export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tracks = [] }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         title: '',
         track_number: 1,
@@ -91,32 +93,32 @@ export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tra
         <div className="dialog-overlay" onClick={handleOverlayClick}>
             <div className="dialog-container" onClick={(e) => e.stopPropagation()}>
                 <div className="dialog-header">
-                    <h2>Upload Track</h2>
+                    <h2>{t('dialog.upload_track')}</h2>
                     <button onClick={handleClose} className="dialog-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="dialog-form">
                     <div className="dialog-field">
-                        <label>Track Title</label>
+                        <label>{t('dialog.track_title')}</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             className="dialog-input"
                             required
-                            placeholder="Enter track title"
+                            placeholder={t('dialog.enter_track_title')}
                         />
                     </div>
                     <div className="dialog-field">
-                        <label>Album (Optional)</label>
+                        <label>{t('dialog.album_optional')}</label>
                         <AlbumComboBox
                             albums={albums}
                             value={formData.album_id}
                             onChange={(value) => setFormData({ ...formData, album_id: value })}
-                            placeholder="Select an album or leave empty"
+                            placeholder={t('dialog.select_album_hint')}
                         />
                     </div>
                     <div className="dialog-field">
-                        <label>Track Number</label>
+                        <label>{t('dialog.track_number')}</label>
                         <input
                             type="number"
                             value={formData.track_number}
@@ -127,7 +129,7 @@ export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tra
                         />
                     </div>
                     <div className="dialog-field">
-                        <label>Audio File</label>
+                        <label>{t('dialog.audio_file')}</label>
                         <input
                             type="file"
                             accept="audio/*"
@@ -140,7 +142,7 @@ export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tra
                         )}
                     </div>
                     <div className="dialog-field">
-                        <label>Cover Image (Optional)</label>
+                        <label>{t('dialog.cover_image')}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -151,7 +153,7 @@ export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tra
                             <div style={{ marginTop: '10px' }}>
                                 <img
                                     src={coverPreview}
-                                    alt="Cover preview"
+                                    alt={t('dialog.cover_preview')}
                                     style={{ maxWidth: '100%', maxHeight: '150px', borderRadius: '8px' }}
                                 />
                             </div>
@@ -159,10 +161,10 @@ export default function UploadTrackDialog({ isOpen, onClose, onSave, albums, tra
                     </div>
                     <div className="dialog-actions">
                         <button type="button" onClick={handleClose} className="dialog-button dialog-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="dialog-button dialog-button-primary">
-                            Upload Track
+                            {t('dialog.upload_track_btn')}
                         </button>
                     </div>
                 </form>

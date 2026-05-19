@@ -35,9 +35,23 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $locale = app()->getLocale();
+        $translations = __('frontend');
+
+        // Debug logging
+        \Log::info('HandleInertiaRequests share:', [
+            'app_locale' => $locale,
+            'session_locale' => session('locale'),
+            'available_locales' => config('app.supported_locales', ['en']),
+            'translations_keys' => array_keys($translations),
+            'translations_sample' => $translations['nav']['home'] ?? 'missing',
+        ]);
+
         return [
             ...parent::share($request),
-            //
+            'locale' => $locale,
+            'availableLocales' => config('app.supported_locales', ['en']),
+            'translations' => $translations,
         ];
     }
 }

@@ -4,24 +4,26 @@ import { FaPlay, FaUsers, FaBolt, FaHeart } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import '../../../css/public.css';
 import '../../../css/guest.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Welcome({ stats = { choirs: 0, tracks: 0 } }) {
+    const { t } = useTranslation();
     return (
         <MainLayout>
             <div className="public-page welcome-container">
                 <div className="public-header badge">
-                    Uzoefu Bora wa Kwaya
+                    {t('public.welcome_badge')}
                 </div>
 
                 <h1 className="public-header h1 welcome">
-                    Sikiliza <br />
+                    {t('public.listen_tanzania')} <br />
                     <span className="public-header gradient-text">
-                        Sauti za Tanzania
+                        {t('public.voices_tanzania')}
                     </span>
                 </h1>
 
                 <p className="public-header p welcome">
-                    Furahia muziki wa kipekee wa uaminifu wa hali ya juu wa Kikristo wa Kwaya kutoka huko <span className="highlight">{stats.choirs} kwaya zilizothibitishwa</span> na <span className="highlight">{stats.tracks} tracks</span>. Saidia kwaya za ndani moja kwa moja kupitia ushirikiano rahisi wa malipo ya simu wa Mongike.
+                    {t('public.welcome_desc', { choirs: stats.choirs, tracks: stats.tracks })}
                 </p>
 
                 <div className="public-grid welcome">
@@ -29,9 +31,9 @@ export default function Welcome({ stats = { choirs: 0, tracks: 0 } }) {
                         <div className="icon blue">
                             <FaPlay className="svg" size={24} />
                         </div>
-                        <h3 className="public-card h3">Sauti ya Ubora wa Juu</h3>
+                        <h3 className="public-card h3">{t('public.high_quality_sound')}</h3>
                         <p className="public-card p">
-                            Premium offline playback and background listening features for an uninterrupted spiritual journey.
+                            {t('public.high_quality_desc')}
                         </p>
                     </div>
 
@@ -39,9 +41,9 @@ export default function Welcome({ stats = { choirs: 0, tracks: 0 } }) {
                         <div className="icon amber">
                             <FaUsers className="svg" size={24} />
                         </div>
-                        <h3 className="public-card h3">Support Kwaya</h3>
+                        <h3 className="public-card h3">{t('public.support_choirs')}</h3>
                         <p className="public-card p">
-                            Direct subscription payouts to verified Kwaya managers through integrated financial systems.
+                            {t('public.support_choirs_desc')}
                         </p>
                     </div>
 
@@ -49,18 +51,18 @@ export default function Welcome({ stats = { choirs: 0, tracks: 0 } }) {
                         <div className="icon purple">
                             <FaBolt className="svg" size={24} />
                         </div>
-                        <h3 className="public-card h3">Usawazishaji wa Papo Hapo</h3>
+                        <h3 className="public-card h3">{t('public.instant_sync')}</h3>
                         <p className="public-card p">
-                            Real-time payment notifications and instantaneous premium unlocks powered by Laravel Reverb.
+                            {t('public.instant_sync_desc')}
                         </p>
                     </div>
                 </div>
 
                 <div style={{ marginTop: '48px', textAlign: 'center', padding: '32px 24px', background: 'linear-gradient(135deg, rgba(184,134,11,0.15), rgba(184,134,11,0.05))', borderRadius: '16px', border: '1px solid rgba(184,134,11,0.3)' }}>
                     <div style={{ fontSize: '40px', marginBottom: '12px' }}>☕</div>
-                    <h3 style={{ color: '#fff', marginBottom: '8px', fontSize: '1.4rem' }}>Buy Us a Coffee</h3>
+                    <h3 style={{ color: '#fff', marginBottom: '8px', fontSize: '1.4rem' }}>{t('public.buy_coffee')}</h3>
                     <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '20px', maxWidth: '500px', margin: '0 auto 20px' }}>
-                        Help us improve Acapella and support the artists. Every contribution makes a difference.
+                        {t('public.donate_desc')}
                     </p>
                     <button
                         onClick={() => router.visit('/donate')}
@@ -78,7 +80,7 @@ export default function Welcome({ stats = { choirs: 0, tracks: 0 } }) {
                             gap: '8px',
                         }}
                     >
-                        <FaHeart /> Donate Now
+                        <FaHeart /> {t('public.donate_now')}
                     </button>
                 </div>
             </div>

@@ -4,8 +4,10 @@ import apiService from '../../Services/apiService';
 import { db, STORAGE_KEYS } from '../../Utils/indexedDB';
 import { toast } from '../../Components/ToastContainer';
 import '../../../css/auth.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Register() {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [processing, setProcessing] = useState(false);
@@ -45,7 +47,7 @@ export default function Register() {
             // Dispatch auth changed event for Nav component
             window.dispatchEvent(new CustomEvent('auth-changed'));
 
-            toast.success('Akaunti imeundwa kwa mafanikio!');
+            toast.success(t('auth.registration_success'));
 
             // Redirect to auth gate which will handle the redirect based on user role
             router.visit('/auth-gate');
@@ -54,13 +56,13 @@ export default function Register() {
             console.error('Error response:', error.response);
             if (error.response?.data?.errors) {
                 setErrors(error.response.data.errors);
-                toast.error('Tafadhali angalia fomu kwa makosa.');
+                toast.error(t('auth.check_form_errors'));
             } else if (error.response?.data?.message) {
                 setErrors({ general: error.response.data.message });
                 toast.error(error.response.data.message);
             } else {
-                setErrors({ general: 'An error occurred. Please try again.' });
-                toast.error('Kuna hitilafu. Tafadhali jaribu tena.');
+                setErrors({ general: t('auth.error_occurred') });
+                toast.error(t('auth.error_occurred'));
             }
         } finally {
             setProcessing(false);
@@ -82,11 +84,11 @@ export default function Register() {
                 </div>
 
                 <div className="auth-card">
-                    <h2 className="auth-card h2">Create your account</h2>
+                    <h2 className="auth-card h2">{t('auth.create_account')}</h2>
                     
                     <form onSubmit={submit} className="auth-form">
                         <div>
-                            <label className="auth-form label">Full Name</label>
+                            <label className="auth-form label">{t('auth.full_name')}</label>
                             <input
                                 type="text"
                                 value={data.name}
@@ -98,7 +100,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="auth-form label">Email</label>
+                            <label className="auth-form label">{t('auth.email')}</label>
                             <input
                                 type="email"
                                 value={data.email}
@@ -110,7 +112,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <label className="auth-form label">Password</label>
+                            <label className="auth-form label">{t('auth.password')}</label>
                             <div className="password-input-wrapper">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
@@ -140,7 +142,7 @@ export default function Register() {
                         </div>
                         
                         <div>
-                            <label className="auth-form label">Confirm Password</label>
+                            <label className="auth-form label">{t('auth.confirm_password')}</label>
                             <div className="password-input-wrapper">
                                 <input
                                     type={showConfirmPassword ? 'text' : 'password'}
@@ -173,14 +175,14 @@ export default function Register() {
                             disabled={processing}
                             className="auth-form button"
                         >
-                            Jisajili
+                            {t('auth.register')}
                         </button>
                     </form>
 
                     <div className="auth-footer">
-                        Already have an account?{' '}
+                        {t('auth.have_account')}{' '}
                         <Link href="/login" className="auth-footer link-text">
-                            Log in
+                            {t('auth.login')}
                         </Link>
                     </div>
                 </div>

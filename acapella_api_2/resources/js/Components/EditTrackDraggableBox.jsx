@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
 import CustomAudioPlayer from './CustomAudioPlayer';
+import useTranslation from '../hooks/useTranslation';
 
 export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         title: '',
         track_number: 1,
@@ -73,23 +75,23 @@ export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }
         <div className="draggable-box-overlay" onClick={handleOverlayClick}>
             <div className="draggable-box-container" onClick={(e) => e.stopPropagation()}>
                 <div className="draggable-box-header">
-                    <h2>Edit Track</h2>
+                    <h2>{t('dialog.edit_track')}</h2>
                     <button onClick={handleClose} className="draggable-box-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="draggable-box-form">
                     <div className="draggable-box-field">
-                        <label>Track Title</label>
+                        <label>{t('dialog.track_title')}</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             className="draggable-box-input"
                             required
-                            placeholder="Enter track title"
+                            placeholder={t('dialog.enter_track_title')}
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Track Number</label>
+                        <label>{t('dialog.track_number')}</label>
                         <input
                             type="number"
                             value={formData.track_number}
@@ -100,7 +102,7 @@ export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Audio File (Optional)</label>
+                        <label>{t('dialog.audio_file_optional')}</label>
                         <input
                             type="file"
                             accept="audio/*"
@@ -108,14 +110,14 @@ export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }
                             className="draggable-box-input"
                         />
                         <small style={{ color: 'var(--text-tertiary)', display: 'block', marginTop: '4px' }}>
-                            Leave empty to keep existing audio file
+                            {t('dialog.keep_existing_audio')}
                         </small>
                         {audioPreview && (
                             <CustomAudioPlayer src={audioPreview} />
                         )}
                     </div>
                     <div className="draggable-box-field">
-                        <label>Cover Image (Optional)</label>
+                        <label>{t('dialog.cover_image')}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -123,13 +125,13 @@ export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }
                             className="draggable-box-input"
                         />
                         <small style={{ color: 'var(--text-tertiary)', display: 'block', marginTop: '4px' }}>
-                            Leave empty to keep existing cover
+                            {t('dialog.keep_existing_cover')}
                         </small>
                         {coverPreview && (
                             <div style={{ marginTop: '10px' }}>
                                 <img
                                     src={coverPreview}
-                                    alt="Cover preview"
+                                    alt={t('dialog.cover_preview')}
                                     style={{ maxWidth: '100%', maxHeight: '150px', borderRadius: '8px' }}
                                 />
                             </div>
@@ -137,10 +139,10 @@ export default function EditTrackDraggableBox({ isOpen, onClose, onSave, track }
                     </div>
                     <div className="draggable-box-actions">
                         <button type="button" onClick={handleClose} className="draggable-box-button draggable-box-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="draggable-box-button draggable-box-button-primary">
-                            Update Track
+                            {t('dialog.update_track')}
                         </button>
                     </div>
                 </form>

@@ -8,6 +8,7 @@ import { router } from '@inertiajs/react';
 import { createPortal } from 'react-dom';
 import { useRef, useEffect, useState } from 'react';
 import { db, STORAGE_KEYS } from '../Utils/indexedDB';
+import useTranslation from '../hooks/useTranslation';
 
 // Module-level cache so we don't read IndexedDB once per row
 let cachedIsPremium = null;
@@ -24,6 +25,7 @@ const loadIsPremium = async () => {
 };
 
 export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, queue, onUnlikeSuccess }) {
+    const { t } = useTranslation();
     const buttonRef = useRef(null);
     const dropdownRef = useRef(null);
     const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 });
@@ -92,7 +94,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
             setPlaylists(Array.isArray(data) ? data : []);
         } catch (error) {
             console.error('Error loading playlists:', error);
-            toast.error('Failed to load playlists');
+            toast.error(t('track_dropdown.failed_load_playlists'));
             setPlaylists([]);
         } finally {
             setLoadingPlaylists(false);
@@ -102,41 +104,41 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
     const handleSaveToPlaylist = async (playlistId) => {
         try {
             await playlistService.addTrackToPlaylist(playlistId, track.id);
-            toast.success('Added to playlist');
+            toast.success(t('track_dropdown.added_to_playlist'));
             setActiveMenu(null);
         } catch (error) {
             console.error('Error adding to playlist:', error);
-            toast.error('Failed to add to playlist');
+            toast.error(t('track_dropdown.failed_add_playlist'));
         }
     };
 
     const handleCreatePlaylist = async () => {
-        const name = window.prompt('Enter playlist name:');
+        const name = window.prompt(t('track_dropdown.enter_playlist_name'));
         if (!name || !name.trim()) return;
         try {
             const response = await playlistService.createPlaylist({ name: name.trim() });
             const newPlaylist = response.data || response;
-            toast.success('Playlist created');
+            toast.success(t('track_dropdown.playlist_created'));
             // Add current track to the newly created playlist
             if (newPlaylist?.id) {
                 await playlistService.addTrackToPlaylist(newPlaylist.id, track.id);
-                toast.success('Added to playlist');
+                toast.success(t('track_dropdown.added_to_playlist'));
             }
             setActiveMenu(null);
         } catch (error) {
             console.error('Error creating playlist:', error);
-            toast.error('Failed to create playlist');
+            toast.error(t('track_dropdown.failed_create_playlist'));
         }
     };
 
     const handleRemoveFromPlaylist = async (playlistId) => {
         try {
             await playlistService.removeTrackFromPlaylist(playlistId, track.id);
-            toast.success('Removed from playlist');
+            toast.success(t('track_dropdown.removed_from_playlist'));
             setActiveMenu(null);
         } catch (error) {
             console.error('Error removing from playlist:', error);
-            toast.error('Failed to remove from playlist');
+            toast.error(t('track_dropdown.failed_remove_playlist'));
         }
     };
 
@@ -154,24 +156,24 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                     }
                 }
                 if (currentQueue.length >= 5) {
-                    toast.error('Free users are limited to 5 tracks in queue. Upgrade to Premium.');
+                    toast.error(t('track_dropdown.queue_limit'));
                     router.visit('/payments?plan=monthly');
                     return;
                 }
             }
             await trackService.addToQueue(track.id);
-            toast.success('Added to queue');
+            toast.success(t('track_dropdown.added_to_queue'));
         } catch {
-            toast.error('Failed to add to queue');
+            toast.error(t('track_dropdown.failed_add_queue'));
         }
     };
 
     const handleRemoveFromQueue = async (queueItem) => {
         try {
             await trackService.removeFromQueue(queueItem.id);
-            toast.success('Removed from queue');
+            toast.success(t('track_dropdown.removed_from_queue'));
         } catch {
-            toast.error('Failed to remove from queue');
+            toast.error(t('track_dropdown.failed_remove_queue'));
         }
     };
 
@@ -180,24 +182,24 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
         try {
             const response = await trackService.unlikeTrack(track.id);
             console.log('Unlike response:', response);
-            toast.success('Removed from liked');
+            toast.success(t('track_dropdown.removed_from_liked'));
             if (onUnlikeSuccess) {
                 onUnlikeSuccess();
             }
         } catch (_error) {
             console.error('Error removing from liked:', _error);
-            toast.error('Failed to remove from liked');
+            toast.error(t('track_dropdown.failed_remove_liked'));
         }
     };
 
     const handleDownload = async (trackData) => {
         if (!trackData?.file_path) {
-            toast.error('Track file not available');
+            toast.error(t('track_dropdown.file_not_available'));
             return;
         }
 
         try {
-            toast.info('Starting download...');
+            toast.info(t('track_dropdown.starting_download'));
             const response = await fetch(trackData.file_path);
             if (!response.ok) throw new Error('Failed to fetch file');
 
@@ -219,10 +221,10 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
             // Cleanup blob URL after a short delay
             setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-            toast.success('Download started');
+            toast.success(t('track_dropdown.download_started'));
         } catch (error) {
             console.error('Download error:', error);
-            toast.error('Failed to download track');
+            toast.error(t('track_dropdown.failed_download'));
         }
     };
 
@@ -233,7 +235,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
             try {
                 await navigator.share({
                     title: trackData.title,
-                    text: `Check out ${trackData.title} on Acapella!`,
+                    text: t('track_dropdown.share_text', { title: trackData.title }),
                     url: shareUrl,
                 });
             } catch (err) {
@@ -242,7 +244,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
         } else {
             // Fallback
             navigator.clipboard.writeText(shareUrl);
-            toast.success('Link copied to clipboard!');
+            toast.success(t('track_dropdown.link_copied'));
         }
     };
 
@@ -251,7 +253,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
         const premiumOptions = ['download', 'save_to_playlist', 'remove_from_playlist', 'add_to_liked', 'remove_from_liked'];
         if (premiumOptions.includes(option) && !isPremium) {
             setActiveMenu(null);
-            toast.error('Premium feature. Upgrade to unlock.');
+            toast.error(t('track_dropdown.premium_feature'));
             router.visit('/payments?plan=monthly');
             return;
         }
@@ -274,10 +276,10 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                 try {
                     const response = await trackService.likeTrack(trackData.id);
                     console.log('Like response:', response);
-                    toast.success('Added to liked');
+                    toast.success(t('track_dropdown.added_to_liked'));
                 } catch (error) {
                     console.error('Error adding to liked:', error);
-                    toast.error('Failed to add to liked');
+                    toast.error(t('track_dropdown.failed_add_liked'));
                 }
                 break;
             case 'download':
@@ -324,10 +326,10 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                                 style={{ fontWeight: 'bold', borderBottom: '1px solid #333' }}
                                 onClick={(e) => { e.stopPropagation(); setPlaylistMode(null); }}
                             >
-                                ← {playlistMode === 'save' ? 'Save to playlist' : 'Remove from playlist'}
+                                ← {playlistMode === 'save' ? t('track_dropdown.save_to_playlist') : t('track_dropdown.remove_from_playlist')}
                             </div>
                             {loadingPlaylists ? (
-                                <div className="dropdown-item" style={{ opacity: 0.6 }}>Loading...</div>
+                                <div className="dropdown-item" style={{ opacity: 0.6 }}>{t('track_dropdown.loading')}</div>
                             ) : (
                                 <>
                                     {playlistMode === 'save' && (
@@ -336,11 +338,11 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                                             style={{ color: '#B8860B', fontWeight: 'bold' }}
                                             onClick={(e) => { e.stopPropagation(); handleCreatePlaylist(); }}
                                         >
-                                            + Create new playlist
+                                            + {t('track_dropdown.create_new_playlist')}
                                         </div>
                                     )}
                                     {playlists.length === 0 ? (
-                                        <div className="dropdown-item" style={{ opacity: 0.6 }}>No playlists found</div>
+                                        <div className="dropdown-item" style={{ opacity: 0.6 }}>{t('track_dropdown.no_playlists')}</div>
                                     ) : (
                                         playlists.map((pl) => (
                                             <div
@@ -355,7 +357,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                                                     }
                                                 }}
                                             >
-                                                {pl.name || pl.title || `Playlist #${pl.id}`}
+                                                {pl.name || pl.title || t('track_dropdown.playlist_number', { id: pl.id })}
                                             </div>
                                         ))
                                     )}
@@ -368,14 +370,14 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                         className="dropdown-item"
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('add_to_queue', track); }}
                     >
-                        <FaPlus style={{ marginRight: 10 }} /> Add to queue
+                        <FaPlus style={{ marginRight: 10 }} /> {t('track_dropdown.add_to_queue')}
                     </div>
                     <div 
                         className="dropdown-item"
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('add_to_liked', track); }}
                         style={!isPremium ? { opacity: 0.7 } : undefined}
                     >
-                        <FaHeart style={{ marginRight: 10, color: '#e74c3c' }} /> Add to liked
+                        <FaHeart style={{ marginRight: 10, color: '#e74c3c' }} /> {t('track_dropdown.add_to_liked')}
                         {!isPremium && <FaLock style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }} />}
                     </div>
                     <div 
@@ -383,7 +385,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('download', track); }}
                         style={!isPremium ? { opacity: 0.7 } : undefined}
                     >
-                        <FaDownload style={{ marginRight: 10 }} /> Download
+                        <FaDownload style={{ marginRight: 10 }} /> {t('track_dropdown.download')}
                         {!isPremium && <FaLock style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }} />}
                     </div>
                     <div 
@@ -391,7 +393,7 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('save_to_playlist', track); }}
                         style={!isPremium ? { opacity: 0.7 } : undefined}
                     >
-                        <FaListUl style={{ marginRight: 10 }} /> Save to playlist
+                        <FaListUl style={{ marginRight: 10 }} /> {t('track_dropdown.save_to_playlist')}
                         {!isPremium && <FaLock style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }} />}
                     </div>
                     <div 
@@ -399,28 +401,28 @@ export default function SheetTrackDropdown({ track, activeMenu, setActiveMenu, q
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('remove_from_playlist', track); }}
                         style={!isPremium ? { opacity: 0.7 } : undefined}
                     >
-                        <FaMinusCircle style={{ marginRight: 10 }} /> Remove from playlist
+                        <FaMinusCircle style={{ marginRight: 10 }} /> {t('track_dropdown.remove_from_playlist')}
                         {!isPremium && <FaLock style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }} />}
                     </div>
                     <div 
                         className="dropdown-item"
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('remove_from_queue', track); }}
                     >
-                        <FaTrashAlt style={{ marginRight: 10 }} /> Remove from queue
+                        <FaTrashAlt style={{ marginRight: 10 }} /> {t('track_dropdown.remove_from_queue')}
                     </div>
                     <div 
                         className="dropdown-item"
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('remove_from_liked', track); }}
                         style={!isPremium ? { opacity: 0.7 } : undefined}
                     >
-                        <FaHeartBroken style={{ marginRight: 10 }} /> Remove from liked
+                        <FaHeartBroken style={{ marginRight: 10 }} /> {t('track_dropdown.remove_from_liked')}
                         {!isPremium && <FaLock style={{ marginLeft: 'auto', fontSize: 12, opacity: 0.6 }} />}
                     </div>
                     <div 
                         className="dropdown-item"
                         onClick={(e) => { e.stopPropagation(); handleMenuOption('share', track); }}
                     >
-                        <FaShareAlt style={{ marginRight: 10 }} /> Share
+                        <FaShareAlt style={{ marginRight: 10 }} /> {t('track_dropdown.share')}
                     </div>
                     </>
                     )}

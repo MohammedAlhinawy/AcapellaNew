@@ -2,8 +2,10 @@ import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 import axios from 'axios';
 import '../../../css/auth.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function ForgotPassword() {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -19,7 +21,7 @@ export default function ForgotPassword() {
         } catch (err) {
             const msg = err.response?.data?.message
                 || err.response?.data?.errors?.email?.[0]
-                || 'Something went wrong. Please try again.';
+                || t('auth.something_wrong');
             setError(msg);
         } finally {
             setProcessing(false);
@@ -40,19 +42,19 @@ export default function ForgotPassword() {
                 </div>
 
                 <div className="auth-card">
-                    <h2 className="auth-card h2">Reset your password</h2>
+                    <h2 className="auth-card h2">{t('auth.reset_password')}</h2>
                     <p className="auth-card p">
-                        Enter your email and we will send password reset instructions if the account exists.
+                        {t('auth.reset_description')}
                     </p>
 
                     {success ? (
                         <div className="auth-form success-message">
-                            A password reset link has been sent to <strong>{email}</strong>. Please check your inbox (and spam folder).
+                            {t('auth.reset_link_sent')} <strong>{email}</strong>. {t('auth.check_inbox')}
                         </div>
                     ) : (
                         <form onSubmit={submit} className="auth-form">
                             <div>
-                                <label className="auth-form label">Email</label>
+                                <label className="auth-form label">{t('auth.email')}</label>
                                 <input
                                     type="email"
                                     value={email}
@@ -70,15 +72,15 @@ export default function ForgotPassword() {
                                 disabled={processing}
                                 className="auth-form button"
                             >
-                                {processing ? 'Sending…' : 'Send reset link'}
+                                {processing ? t('auth.sending') : t('auth.send_reset_link')}
                             </button>
                         </form>
                     )}
 
                     <div className="auth-footer">
-                        Remember your password?{' '}
+                        {t('auth.remember_password')}{' '}
                         <Link href="/login" className="auth-footer link-text">
-                            Log in
+                            {t('auth.login')}
                         </Link>
                     </div>
                 </div>

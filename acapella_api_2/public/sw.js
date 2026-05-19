@@ -1,10 +1,16 @@
 // Service Worker for Acapella PWA
-const CACHE_NAME = 'acapella-v1';
+const CACHE_NAME = 'acapella-v2';
 const urlsToCache = [
     '/',
-    '/discover',
-    '/choirs',
+    '/welcome',
     '/premium',
+    '/become-choir-manager',
+    '/terms-of-service',
+    '/privacy-policy',
+    '/donate',
+    '/login',
+    '/register',
+    '/forgot-password',
     '/api/choirs',
     '/api/albums',
     '/api/tracks'

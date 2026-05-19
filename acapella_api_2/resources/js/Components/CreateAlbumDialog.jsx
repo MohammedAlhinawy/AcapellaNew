@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function CreateAlbumDialog({ isOpen, onClose, onSave }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         title: '',
         year: new Date().getFullYear(),
@@ -37,12 +39,12 @@ export default function CreateAlbumDialog({ isOpen, onClose, onSave }) {
         <div className="dialog-overlay" onClick={handleOverlayClick}>
             <div className="dialog-container" onClick={(e) => e.stopPropagation()}>
                 <div className="dialog-header">
-                    <h2>Create New Album</h2>
+                    <h2>{t('dialog.create_album')}</h2>
                     <button onClick={onClose} className="dialog-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="dialog-form">
                     <div className="dialog-field">
-                        <label>Album Cover</label>
+                        <label>{t('dialog.album_cover')}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -60,28 +62,28 @@ export default function CreateAlbumDialog({ isOpen, onClose, onSave }) {
                         )}
                     </div>
                     <div className="dialog-field">
-                        <label>Album Title</label>
+                        <label>{t('dialog.album_title')}</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             className="dialog-input"
                             required
-                            placeholder="Enter album title"
+                            placeholder={t('dialog.enter_album_title')}
                         />
                     </div>
                     <div className="dialog-field">
-                        <label>Genre</label>
+                        <label>{t('dialog.genre')}</label>
                         <input
                             type="text"
                             value={formData.genre}
                             onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                             className="dialog-input"
-                            placeholder="Enter genre (e.g., Gospel, Worship)"
+                            placeholder={t('dialog.enter_genre')}
                         />
                     </div>
                     <div className="dialog-field">
-                        <label>Year</label>
+                        <label>{t('dialog.year')}</label>
                         <input
                             type="number"
                             value={formData.year}
@@ -107,10 +109,10 @@ export default function CreateAlbumDialog({ isOpen, onClose, onSave }) {
                     */}
                     <div className="dialog-actions">
                         <button type="button" onClick={onClose} className="dialog-button dialog-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="dialog-button dialog-button-primary">
-                            Create Album
+                            {t('dialog.create_album_btn')}
                         </button>
                     </div>
                 </form>

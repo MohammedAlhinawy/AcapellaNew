@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function EditChoirDraggableBox({ isOpen, onClose, onSave, choir }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         location: '',
@@ -44,12 +46,12 @@ export default function EditChoirDraggableBox({ isOpen, onClose, onSave, choir }
         <div className="draggable-box-overlay">
             <div className="draggable-box-container">
                 <div className="draggable-box-header">
-                    <h2>Edit Choir</h2>
+                    <h2>{t('dialog.edit_choir')}</h2>
                     <button onClick={onClose} className="draggable-box-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="draggable-box-form">
                     <div className="draggable-box-field">
-                        <label>Choir Image</label>
+                        <label>{t('dialog.choir_image')}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -60,50 +62,50 @@ export default function EditChoirDraggableBox({ isOpen, onClose, onSave, choir }
                             <div className="image-preview" style={{ marginTop: '10px' }}>
                                 <img
                                     src={imagePreview}
-                                    alt="Preview"
+                                    alt={t('dialog.preview')}
                                     style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }}
                                 />
                             </div>
                         )}
                     </div>
                     <div className="draggable-box-field">
-                        <label>Choir Name</label>
+                        <label>{t('dialog.choir_name')}</label>
                         <input
                             type="text"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="draggable-box-input"
                             required
-                            placeholder="Enter choir name"
+                            placeholder={t('dialog.enter_choir_name')}
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Location</label>
+                        <label>{t('dialog.location')}</label>
                         <input
                             type="text"
                             value={formData.location}
                             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                             className="draggable-box-input"
                             required
-                            placeholder="Enter location (e.g., Dar es Salaam, Tanzania)"
+                            placeholder={t('dialog.enter_location')}
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Bio</label>
+                        <label>{t('dialog.choir_description')}</label>
                         <textarea
                             value={formData.bio}
                             onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                             className="draggable-box-input"
                             rows={4}
-                            placeholder="Describe your choir (optional)"
+                            placeholder={t('dialog.enter_choir_description')}
                         />
                     </div>
                     <div className="draggable-box-actions">
                         <button type="button" onClick={onClose} className="draggable-box-button draggable-box-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="draggable-box-button draggable-box-button-primary">
-                            Save Changes
+                            {t('dialog.save_changes')}
                         </button>
                     </div>
                 </form>

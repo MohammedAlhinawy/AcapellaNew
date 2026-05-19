@@ -11,11 +11,13 @@ import EditProfileDraggableBox from '../../Components/EditProfileDraggableBox';
 import EditPasswordDraggableBox from '../../Components/EditPasswordDraggableBox';
 import CustomAlertDialog from '../../Components/CustomAlertDialog';
 import LanguageSelector from '../../Components/LanguageSelector';
+import useTranslation from '../../hooks/useTranslation';
 import { FaRegEnvelope } from "react-icons/fa";
 import '../../../css/manager.css';
 import '../../../css/profile.css';
 
 export default function ChoirManagerProfile() {
+    const { t } = useTranslation();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
@@ -126,8 +128,8 @@ export default function ChoirManagerProfile() {
             <MainLayout>
                 <div className="listener-page">
                     <div className="listener-header">
-                        <h1>Profile</h1>
-                        <p>Loading...</p>
+                        <h1>{t('profile.title')}</h1>
+                        <p>{t('common.loading')}</p>
                     </div>
                 </div>
             </MainLayout>
@@ -138,8 +140,8 @@ export default function ChoirManagerProfile() {
         <MainLayout>
             <div className="manager-page">
                 <div className="listener-header">
-                    <h1>Profile</h1>
-                    <p>Manage your account settings and preferences</p>
+                    <h1>{t('profile.title')}</h1>
+                    <p>{t('profile.settings')}</p>
                 </div>
 
                 <div className="settings-content">
@@ -161,11 +163,11 @@ export default function ChoirManagerProfile() {
                         <div className="luxury-card-body">
                             <div className="luxury-info-grid">
                                 <div className="luxury-info-item">
-                                    <span className="luxury-info-label">Role</span>
+                                    <span className="luxury-info-label">{t('profile.role')}</span>
                                     <span className="luxury-info-value">{user.role}</span>
                                 </div>
                                 <div className="luxury-info-item">
-                                    <span className="luxury-info-label">Member Since</span>
+                                    <span className="luxury-info-label">{t('profile.member_since')}</span>
                                     <span className="luxury-info-value">{new Date(user.created_at).toLocaleDateString()}</span>
                                 </div>
                             </div>
@@ -173,10 +175,10 @@ export default function ChoirManagerProfile() {
 
                         <div className="luxury-card-footer">
                             <button onClick={handleEditProfile} className="luxury-button luxury-button-primary">
-                                <span>✎</span> Edit Profile
+                                <span>✎</span> {t('profile.edit')}
                             </button>
                             <button onClick={handleEditPassword} className="luxury-button luxury-button-secondary">
-                                <span>🔒</span> Change Password
+                                <span>🔒</span> {t('profile.change_password')}
                             </button>
                         </div>
                     </div>
@@ -188,8 +190,8 @@ export default function ChoirManagerProfile() {
                                 <span className="luxury-icon">⚙️</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">System Preferences</h2>
-                                <p className="luxury-card-subtitle">Customize your experience</p>
+                                <h2 className="luxury-card-title">{t('profile.system_preferences')}</h2>
+                                <p className="luxury-card-subtitle">{t('profile.customize_experience')}</p>
                             </div>
                         </div>
 
@@ -207,18 +209,18 @@ export default function ChoirManagerProfile() {
                                 <span className="luxury-icon">💬</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Feedback</h2>
-                                <p className="luxury-card-subtitle">Share your thoughts with us</p>
+                                <h2 className="luxury-card-title">{t('profile.feedback')}</h2>
+                                <p className="luxury-card-subtitle">{t('profile.feedback_subtitle')}</p>
                             </div>
                         </div>
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text" style={{ color: 'var(--text-secondary)' }}>
-                                Help us improve Acapella by sharing your feedback, reporting bugs, or suggesting features.
+                                {t('profile.feedback_description')}
                             </p>
                         </div>
                         <div className="luxury-card-footer">
                             <button onClick={() => router.visit('/feedback')} className="luxury-button luxury-button-primary">
-                                <FaRegEnvelope /> Submit Feedback
+                                <FaRegEnvelope /> {t('profile.submit_feedback')}
                             </button>
                         </div>
                     </div>
@@ -230,18 +232,18 @@ export default function ChoirManagerProfile() {
                                 <span className="luxury-icon">☕</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Support Us</h2>
-                                <p className="luxury-card-subtitle">Help us improve Acapella</p>
+                                <h2 className="luxury-card-title">{t('profile.support_us')}</h2>
+                                <p className="luxury-card-subtitle">{t('profile.support_subtitle')}</p>
                             </div>
                         </div>
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text" style={{ color: 'var(--text-secondary)' }}>
-                                Buy us a coffee or make a donation. Asante sana! 🙏
+                                {t('profile.support_description')}
                             </p>
                         </div>
                         <div className="luxury-card-footer">
                             <button onClick={() => router.visit('/donate')} className="luxury-button luxury-button-gold">
-                                <span>❤</span> Buy Us a Coffee
+                                <span>❤</span> {t('profile.buy_coffee')}
                             </button>
                         </div>
                     </div>
@@ -253,20 +255,20 @@ export default function ChoirManagerProfile() {
                                 <span className="luxury-icon">⚠️</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Danger Zone</h2>
-                                <p className="luxury-card-subtitle">Irreversible account actions</p>
+                                <h2 className="luxury-card-title">{t('profile.danger_zone')}</h2>
+                                <p className="luxury-card-subtitle">{t('profile.danger_subtitle')}</p>
                             </div>
                         </div>
 
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text">
-                                Deleting your account is permanent and cannot be undone. All your data, including choirs, albums, and tracks, will be permanently removed.
+                                {t('profile.delete_warning')}
                             </p>
                         </div>
 
                         <div className="luxury-card-footer">
                             <button onClick={handleDeleteAccount} className="luxury-button luxury-button-danger-full">
-                                <span>🗑️</span> Delete Account
+                                <span>🗑️</span> {t('profile.delete_account')}
                             </button>
                         </div>
                     </div>
@@ -274,7 +276,7 @@ export default function ChoirManagerProfile() {
                     {/* Logout Button */}
                     <div className="settings-logout-section">
                         <button onClick={handleLogout} className="luxury-button luxury-button-logout">
-                            <span>→</span> Logout
+                            <span>→</span> {t('profile.logout')}
                         </button>
                     </div>
                 </div>
@@ -314,20 +316,20 @@ export default function ChoirManagerProfile() {
                     isOpen={isDeleteAlertOpen}
                     onClose={() => setIsDeleteAlertOpen(false)}
                     onConfirm={confirmDeleteAccount}
-                    title="Delete Account"
-                    message="Are you sure you want to delete your account? This action cannot be undone. All your data, including choirs, albums, and tracks, will be permanently removed."
-                    confirmText="Delete Account"
-                    cancelText="Cancel"
+                    title={t('profile.delete_account')}
+                    message={t('profile.delete_confirm')}
+                    confirmText={t('profile.delete_account')}
+                    cancelText={t('profile.cancel')}
                     type="danger"
                 />
                 <CustomAlertDialog
                     isOpen={isLogoutAlertOpen}
                     onClose={() => setIsLogoutAlertOpen(false)}
                     onConfirm={confirmLogout}
-                    title="Logout"
-                    message="Are you sure you want to logout?"
-                    confirmText="Logout"
-                    cancelText="Cancel"
+                    title={t('profile.logout')}
+                    message={t('profile.logout_confirm')}
+                    confirmText={t('profile.logout')}
+                    cancelText={t('profile.cancel')}
                     type="primary"
                 />
             </div>

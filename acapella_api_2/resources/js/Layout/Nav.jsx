@@ -3,8 +3,10 @@ import { Link, usePage } from '@inertiajs/react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { db, STORAGE_KEYS } from '../Utils/indexedDB';
 import '../../css/nav.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function Nav() {
+    const { t } = useTranslation();
     const { props, url } = usePage();
     const [user, setUser] = useState(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -53,10 +55,10 @@ export default function Nav() {
 
         if (isGuest) {
             return [
-                { label: 'Home', href: '/welcome' },
-                { label: 'Premium', href: '/premium' },
-                { label: 'Login', href: '/login', className: 'nav-link-login' },
-                { label: 'Sign Up', href: '/register', className: 'nav-link-signup' },
+                { label: t('nav.home'), href: '/welcome' },
+                { label: t('nav.premium'), href: '/premium' },
+                { label: t('nav.login'), href: '/login', className: 'nav-link-login' },
+                { label: t('nav.sign_up'), href: '/register', className: 'nav-link-signup' },
             ];
         }
 
@@ -66,28 +68,28 @@ export default function Nav() {
 
         if (user.role === 'listener') {
             return [
-                { label: 'Explore', href: '/explore', activeOn: ['/explore', '/albums', '/choirs'] },
-                { label: 'Library', href: '/library' },
-                { label: 'Profile', href: '/profile' },
+                { label: t('nav.explore'), href: '/explore', activeOn: ['/explore', '/albums', '/choirs'] },
+                { label: t('nav.library'), href: '/library' },
+                { label: t('nav.profile'), href: '/profile' },
             ];
         }
 
         if (user.role === 'choir_manager') {
             return [
-                { label: 'Dashboard', href: '/manager', exact: true },
-                { label: 'My Choirs', href: '/manager/choirs' },
-                { label: 'Profile', href: '/manager/profile' },
+                { label: t('nav.dashboard'), href: '/manager', exact: true },
+                { label: t('nav.my_choirs'), href: '/manager/choirs' },
+                { label: t('nav.profile'), href: '/manager/profile' },
             ];
         }
 
         if (user.role === 'admin') {
             return [
-                { label: 'Dashboard', href: '/admin', exact: true },
-                { label: 'Choirs', href: '/admin/choirs' },
-                { label: 'Users', href: '/admin/users' },
-                { label: 'Requests', href: '/admin/manager-requests' },
-                { label: 'Feedbacks', href: '/admin/feedbacks' },
-                { label: 'Profile', href: '/admin/profile' },
+                { label: t('nav.dashboard'), href: '/admin', exact: true },
+                { label: t('nav.choirs'), href: '/admin/choirs' },
+                { label: t('nav.users'), href: '/admin/users' },
+                { label: t('nav.requests'), href: '/admin/manager-requests' },
+                { label: t('nav.feedbacks'), href: '/admin/feedbacks' },
+                { label: t('nav.profile'), href: '/admin/profile' },
             ];
         }
 

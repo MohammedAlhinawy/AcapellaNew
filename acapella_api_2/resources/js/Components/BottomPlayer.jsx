@@ -2,8 +2,10 @@ import { useAudio } from '../Context/AudioContext';
 import { usePage, router } from '@inertiajs/react';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import '../../css/listener.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function BottomPlayer() {
+    const { t } = useTranslation();
     const { currentTrack, isPlaying, togglePlay, stopTrack } = useAudio();
     const { component } = usePage();
 
@@ -30,7 +32,7 @@ export default function BottomPlayer() {
                         )}
                     </div>
                     <div className="bottom-player-details">
-                        <h4 className="bottom-player-title">{currentTrack.title || 'Unknown Track'}</h4>
+                        <h4 className="bottom-player-title">{currentTrack.title || t('common.unknown_track')}</h4>
                         <p className="bottom-player-subtitle">{currentTrack.duration_label || '0:00'}</p>
                     </div>
                 </div>

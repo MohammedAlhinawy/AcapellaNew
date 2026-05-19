@@ -5,6 +5,7 @@ import { MdForward10, MdReplay10, MdRepeatOne } from "react-icons/md";
 import { useAudio } from '../Context/AudioContext';
 import '../../css/listener.css';
 import '../../css/track-player.css';
+import useTranslation from '../hooks/useTranslation';
 
 const fmt = (seconds) => {
     if (!seconds || isNaN(seconds)) return '0:00';
@@ -14,6 +15,7 @@ const fmt = (seconds) => {
 };
 
 export default function CustomTrackPlayer({ _src, duration }) {
+    const { t } = useTranslation();
     const { isPlaying, togglePlay, audioRef, seekTo, toggleShuffle, cycleReplayMode, skipBackward, skipForward, isShuffle, replayMode } = useAudio();
     // currentTime drives the fill width and timestamp display via React state
     // — but ONLY when NOT dragging. During drag we write to the DOM directly.
@@ -166,11 +168,11 @@ export default function CustomTrackPlayer({ _src, duration }) {
                     className={`replay ${replayMode !== 'off' ? 'active' : ''} mode-${replayMode}`}
                     onClick={cycleReplayMode}
                     title={
-                        replayMode === 'off' ? 'Repeat: Off'
-                        : replayMode === 'repeat-all' ? 'Repeat: All'
-                        : 'Repeat: One'
+                        replayMode === 'off' ? t('common.repeat_off')
+                        : replayMode === 'repeat-all' ? t('common.repeat_all')
+                        : t('common.repeat_one')
                     }
-                    aria-label={`Repeat ${replayMode}`}
+                    aria-label={`${t('common.repeat')} ${replayMode}`}
                 >
                     {replayMode === 'repeat-one'
                         ? <MdRepeatOne size={26} />

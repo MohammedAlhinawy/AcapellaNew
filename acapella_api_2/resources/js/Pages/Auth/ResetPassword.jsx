@@ -3,8 +3,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import '../../../css/auth.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function ResetPassword({ email: initialEmail = '', token: initialToken = '' }) {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [processing, setProcessing] = useState(false);
@@ -34,7 +36,7 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
             if (resp?.errors) {
                 setErrors(resp.errors);
             } else {
-                setFormError(resp?.message || 'Something went wrong. Please try again.');
+                setFormError(resp?.message || t('auth.something_wrong'));
             }
         } finally {
             setProcessing(false);
@@ -55,11 +57,11 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
                 </div>
 
                 <div className="auth-card">
-                    <h2 className="auth-card h2">Create a new password</h2>
+                    <h2 className="auth-card h2">{t('auth.create_new_password')}</h2>
 
                     {success && (
                         <div className="auth-form success-message">
-                            Password reset successfully! Redirecting to login…
+                            {t('auth.password_reset_success')}
                         </div>
                     )}
 
@@ -69,7 +71,7 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
 
                     <form onSubmit={submit} className="auth-form">
                         <div>
-                            <label className="auth-form label">Email</label>
+                            <label className="auth-form label">{t('auth.email')}</label>
                             <input
                                 type="email"
                                 value={data.email}
@@ -81,19 +83,19 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
                         </div>
 
                         <div>
-                            <label className="auth-form label">Reset Token</label>
+                            <label className="auth-form label">{t('auth.reset_token')}</label>
                             <input
                                 type="text"
                                 value={data.token}
                                 onChange={e => setData('token', e.target.value)}
                                 className="auth-form input"
-                                placeholder="Paste your reset token"
+                                placeholder={t('auth.paste_reset_token')}
                             />
                             {errors.token && <div className="auth-form error-message">{errors.token}</div>}
                         </div>
 
                         <div>
-                            <label className="auth-form label">New Password</label>
+                            <label className="auth-form label">{t('auth.new_password')}</label>
                             <div className="password-input-wrapper">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
@@ -123,7 +125,7 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
                         </div>
 
                         <div>
-                            <label className="auth-form label">Confirm New Password</label>
+                            <label className="auth-form label">{t('auth.confirm_new_password')}</label>
                             <div className="password-input-wrapper">
                                 <input
                                     type={showConfirmPassword ? 'text' : 'password'}
@@ -156,14 +158,14 @@ export default function ResetPassword({ email: initialEmail = '', token: initial
                             disabled={processing}
                             className="auth-form button"
                         >
-                            Reset password
+                            {t('auth.reset_password_btn')}
                         </button>
                     </form>
 
                     <div className="auth-footer">
-                        Back to{' '}
+                        {t('auth.back_to_login')}{' '}
                         <Link href="/login" className="auth-footer link-text">
-                            login
+                            {t('auth.login')}
                         </Link>
                     </div>
                 </div>

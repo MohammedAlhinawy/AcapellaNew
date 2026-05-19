@@ -9,8 +9,10 @@ import CreateChoirDraggableBox from '../../Components/CreateChoirDraggableBox';
 import EditChoirDialog from '../../Components/EditChoirDialog';
 import EditChoirDraggableBox from '../../Components/EditChoirDraggableBox';
 import '../../../css/manager.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Choirs() {
+    const { t } = useTranslation();
     const [choirs, setChoirs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -70,7 +72,7 @@ export default function Choirs() {
             }
             
             setIsCreateDialogOpen(false);
-            toast.success('Choir created successfully');
+            toast.success(t('manager.choir_created_success'));
             // Refresh the choirs list
             const updatedChoirs = await managerService.getMyChoirs();
             setChoirs(Array.isArray(updatedChoirs) ? updatedChoirs : []);
@@ -107,7 +109,7 @@ export default function Choirs() {
             
             setIsEditDialogOpen(false);
             setSelectedChoir(null);
-            toast.success('Choir updated successfully');
+            toast.success(t('manager.choir_updated_success'));
             // Refresh the choirs list
             const updatedChoirs = await managerService.getMyChoirs();
             setChoirs(Array.isArray(updatedChoirs) ? updatedChoirs : []);
@@ -128,32 +130,32 @@ export default function Choirs() {
             <div className="manager-page">
                 <div className="manager-container">
                     <div className="manager-header">
-                        <h1>My Choirs</h1>
-                        <p>Manage your choir profiles and verification status</p>
+                        <h1>{t('manager.my_choirs')}</h1>
+                        <p>{t('manager.manage_choir_profiles')}</p>
                     </div>
 
                     <div className="manager-section-header">
                         <span className="manager-section-count">
-                            {loading ? 'Loading...' : `${choirs.length} ${choirs.length === 1 ? 'choir' : 'choirs'}`}
+                            {loading ? t('manager.loading') : `${choirs.length} ${choirs.length === 1 ? t('manager.choir') : t('manager.choirs')}`}
                         </span>
                         <button onClick={handleCreateChoir} className="manager-primary-button">
-                            + Create New Choir
+                            + {t('manager.create_new_choir')}
                         </button>
                     </div>
 
                     {loading ? (
                         <div className="manager-empty-state">
-                            <p>Loading...</p>
+                            <p>{t('manager.loading')}</p>
                         </div>
                     ) : choirs.length === 0 ? (
                         <div className="manager-empty-state">
                             <div className="manager-empty-icon">🎶</div>
-                            <h3 className="manager-empty-title">No choirs yet</h3>
+                            <h3 className="manager-empty-title">{t('manager.no_choirs_yet')}</h3>
                             <p className="manager-empty-description">
-                                Create your first choir to start uploading your music
+                                {t('manager.create_first_choir')}
                             </p>
                             <button onClick={handleCreateChoir} className="manager-primary-button">
-                                Create Your First Choir
+                                {t('manager.create_your_first_choir')}
                             </button>
                         </div>
                     ) : (
@@ -176,7 +178,7 @@ export default function Choirs() {
                                         <h3 className="manager-choir-name">{choir.name}</h3>
                                         <p className="manager-choir-location">📍 {choir.location}</p>
                                         {choir.is_verified && (
-                                            <span className="manager-choir-badge">✓ Verified</span>
+                                            <span className="manager-choir-badge">✓ {t('manager.verified')}</span>
                                         )}
                                     </div>
 
@@ -185,13 +187,13 @@ export default function Choirs() {
                                             href={`/manager/choirs/${choir.id}/content`}
                                             className="manager-choir-action-link"
                                         >
-                                            Manage Content
+                                            {t('manager.manage_content')}
                                         </Link>
                                         <button
                                             onClick={() => handleEditChoir(choir)}
                                             className="manager-choir-action-button"
                                         >
-                                            Edit
+                                            {t('manager.edit')}
                                         </button>
                                     </div>
                                 </div>

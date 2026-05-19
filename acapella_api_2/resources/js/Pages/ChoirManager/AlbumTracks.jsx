@@ -7,8 +7,10 @@ import { toast } from '../../Components/ToastContainer';
 import EditTrackDialog from '../../Components/EditTrackDialog';
 import EditTrackDraggableBox from '../../Components/EditTrackDraggableBox';
 import '../../../css/manager.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function AlbumTracks() {
+    const { t } = useTranslation();
     const { props } = usePage();
     // eslint-disable-next-line react/prop-types
     const albumId = props.album_id || null;
@@ -120,7 +122,7 @@ export default function AlbumTracks() {
             }
             
             handleCloseEditTrackDialog();
-            toast.success('Track updated successfully');
+            toast.success(t('manager.track_updated_success'));
             
             // Refresh tracks
             const tracksData = await managerService.getMyTracks(albumId);
@@ -147,10 +149,10 @@ export default function AlbumTracks() {
                             href={`/manager/choirs/${choirId}/content`} 
                             className="manager-back-link"
                         >
-                            ← Back to Content
+                            ← {t('manager.back_to_content')}
                         </Link>
-                        <h1>{album.title || 'Album'} - Tracks</h1>
-                        <p>Manage tracks for this album</p>
+                        <h1>{album.title || 'Album'} - {t('manager.tracks')}</h1>
+                        <p>{t('manager.manage_tracks_album')}</p>
                     </div>
 
                     {/* Album Info */}
@@ -182,7 +184,7 @@ export default function AlbumTracks() {
                                     <span className="manager-stat-icon">🎵</span>
                                     <div>
                                         <div className="manager-stat-value green">{loading ? '—' : tracks.length}</div>
-                                        <div className="manager-stat-label">Tracks</div>
+                                        <div className="manager-stat-label">{t('manager.tracks')}</div>
                                     </div>
                                 </div>
                             </div>
@@ -192,31 +194,31 @@ export default function AlbumTracks() {
                     {/* Tracks Section */}
                     <div>
                         <div className="manager-section-header">
-                            <h2>All Tracks</h2>
+                            <h2>{t('dialog.all_tracks')}</h2>
                             <Link 
                                 href={`/manager/choirs/${choirId}/content`}
                                 className="manager-primary-button"
                             >
-                                + Add Track
+                                + {t('manager.add_track')}
                             </Link>
                         </div>
 
                         {loading ? (
                             <div className="manager-empty-state">
-                                <p>Loading...</p>
+                                <p>{t('manager.loading')}</p>
                             </div>
                         ) : tracks.length === 0 ? (
                             <div className="manager-empty-state">
                                 <div className="manager-empty-icon">🎵</div>
-                                <h3 className="manager-empty-title">No tracks yet</h3>
+                                <h3 className="manager-empty-title">{t('manager.no_tracks_yet')}</h3>
                                 <p className="manager-empty-description">
-                                    This album doesn&apos;t have any tracks yet
+                                    {t('manager.no_tracks_album_yet')}
                                 </p>
                                 <Link 
                                     href={`/manager/choirs/${choirId}/content`}
                                     className="manager-primary-button"
                                 >
-                                    Add First Track
+                                    {t('manager.add_first_track')}
                                 </Link>
                             </div>
                         ) : (
@@ -259,7 +261,7 @@ export default function AlbumTracks() {
                                                 className="manager-track-edit-button"
                                                 onClick={() => handleEditTrack(track)}
                                             >
-                                                Edit
+                                                {t('manager.edit')}
                                             </button>
                                         </div>
                                     </div>

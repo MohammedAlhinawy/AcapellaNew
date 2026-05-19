@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from '@inertiajs/react';
 import { db, STORAGE_KEYS } from '../Utils/indexedDB';
 import '../../css/footer.css';
+import LanguageToggle from '../Components/LanguageToggle';
 
 export default function Footer() {
     const [user, setUser] = useState(null);
@@ -85,6 +86,9 @@ export default function Footer() {
                         </ul>
                     </div>
                 </div>
+
+                {/* Language Toggle */}
+                <LanguageToggle />
 
                 {/* Copyright */}
                 <div className="footer-copyright">

@@ -4,8 +4,10 @@ import { router } from '@inertiajs/react';
 import apiService from '../../Services/apiService';
 import { FaEye } from 'react-icons/fa';
 import '../../../css/requests.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function RequestManagement() {
+    const { t } = useTranslation();
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState('');
@@ -38,39 +40,39 @@ export default function RequestManagement() {
         <MainLayout>
             <div className="req-page">
                 <div className="req-hero" style={{ textAlign: 'left', marginBottom: 24 }}>
-                    <h1 style={{ fontSize: '2rem' }}>Manager Requests</h1>
-                    <p>Review applications from prospective choir managers.</p>
+                    <h1 style={{ fontSize: '2rem' }}>{t('admin.manager_requests')}</h1>
+                    <p>{t('admin.review_applications')}</p>
                 </div>
 
                 <div className="req-toolbar">
                     <input
                         className="req-form-input"
-                        placeholder="Search by name, email or choir…"
+                        placeholder={t('admin.search_name_email_choir')}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <select className="req-form-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                        <option value="">All statuses</option>
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
+                        <option value="">{t('admin.all_statuses')}</option>
+                        <option value="pending">{t('admin.pending')}</option>
+                        <option value="approved">{t('admin.approved')}</option>
+                        <option value="rejected">{t('admin.rejected')}</option>
                     </select>
                 </div>
 
                 {loading ? (
-                    <div className="req-empty">Loading…</div>
+                    <div className="req-empty">{t('admin.loading')}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="req-empty">No requests found.</div>
+                    <div className="req-empty">{t('admin.no_requests_found')}</div>
                 ) : (
                     <table className="req-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Choir</th>
-                                <th className="hide-mobile">Email</th>
-                                <th className="hide-mobile">Location</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>{t('admin.name')}</th>
+                                <th>{t('admin.choir')}</th>
+                                <th className="hide-mobile">{t('admin.email')}</th>
+                                <th className="hide-mobile">{t('admin.location')}</th>
+                                <th>{t('admin.status')}</th>
+                                <th>{t('admin.actions')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +89,7 @@ export default function RequestManagement() {
                                             style={{ padding: '6px 12px', fontSize: '0.85rem' }}
                                             onClick={() => router.visit(`/admin/manager-requests/${r.id}`)}
                                         >
-                                            <FaEye /> View
+                                            <FaEye /> {t('admin.view')}
                                         </button>
                                     </td>
                                 </tr>

@@ -3,8 +3,10 @@ import { Link } from '@inertiajs/react';
 import MainLayout from '../../Layout/MainLayout';
 import managerService from '../../Services/managerService';
 import '../../../css/manager.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Dashboard() {
+    const { t } = useTranslation();
     const [stats, setStats] = useState({
         totalAlbums: 0,
         totalTracks: 0,
@@ -55,16 +57,16 @@ export default function Dashboard() {
             <div className="manager-page">
                 <div className="manager-container">
                     <div className="manager-header">
-                        <h1>Choir Manager Dashboard</h1>
-                        <p>Manage your choir, albums, and tracks</p>
+                        <h1>{t('manager.choir_manager_dashboard')}</h1>
+                        <p>{t('manager.manage_choir_albums_tracks')}</p>
                     </div>
 
                     {/* Stats */}
                     <div className="manager-stats">
                         {[
-                            { label: 'Total Albums', value: loading ? '—' : stats.totalAlbums, icon: '💿', color: 'blue' },
-                            { label: 'Total Tracks', value: loading ? '—' : stats.totalTracks, icon: '🎵', color: 'green' },
-                            { label: 'Subscribers', value: loading ? '—' : stats.subscribers, icon: '👥', color: 'amber' },
+                            { label: t('manager.total_albums'), value: loading ? '—' : stats.totalAlbums, icon: '💿', color: 'blue' },
+                            { label: t('manager.total_tracks'), value: loading ? '—' : stats.totalTracks, icon: '🎵', color: 'green' },
+                            { label: t('manager.subscribers'), value: loading ? '—' : stats.subscribers, icon: '👥', color: 'amber' },
                         ].map((stat) => (
                             <div key={stat.label} className="manager-stat-card">
                                 <span className="manager-stat-icon">{stat.icon}</span>
@@ -78,12 +80,12 @@ export default function Dashboard() {
 
                     {/* Quick Actions */}
                     <div className="manager-quick-actions">
-                        <h2>Quick Actions</h2>
+                        <h2>{t('manager.quick_actions')}</h2>
                         <div className="manager-action-buttons">
                             {[
-                                { label: 'Upload Track', href: '/manager/choirs' },
-                                { label: 'Create Album', href: '/manager/choirs' },
-                                { label: 'Edit Choir Profile', href: '/manager/profile' },
+                                { label: t('manager.upload_track'), href: '/manager/choirs' },
+                                { label: t('manager.create_album'), href: '/manager/choirs' },
+                                { label: t('manager.edit_choir_profile'), href: '/manager/profile' },
                             ].map((action, index) => (
                                 <Link
                                     key={`${action.href}-${index}`}

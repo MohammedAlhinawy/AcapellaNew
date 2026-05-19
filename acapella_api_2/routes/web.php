@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Locale Switching
+Route::post('/locale', [LocaleController::class, 'update'])->name('locale.update');
 
 // Public Routes
 Route::get('/', function () {

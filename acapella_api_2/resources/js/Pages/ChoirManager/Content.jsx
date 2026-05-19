@@ -13,8 +13,10 @@ import EditAlbumDraggableBox from '../../Components/EditAlbumDraggableBox';
 import EditTrackDialog from '../../Components/EditTrackDialog';
 import EditTrackDraggableBox from '../../Components/EditTrackDraggableBox';
 import '../../../css/manager.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Content() {
+    const { t } = useTranslation();
     const { props } = usePage();
     // eslint-disable-next-line react/prop-types
     const choirId = props.choir_id || null;
@@ -93,7 +95,7 @@ export default function Content() {
 
     const handleCreateAlbum = () => {
         if (!finalChoirId) {
-            toast.error('Unable to create album: Choir ID not found');
+            toast.error(t('manager.unable_create_album_choir_id'));
             return;
         }
         setIsCreateAlbumDialogOpen(true);
@@ -101,7 +103,7 @@ export default function Content() {
 
     const handleSaveAlbum = async (data) => {
         if (!finalChoirId) {
-            toast.error('Unable to create album: Choir ID not found');
+            toast.error(t('manager.unable_create_album_choir_id'));
             return;
         }
 
@@ -128,7 +130,7 @@ export default function Content() {
             }
             
             setIsCreateAlbumDialogOpen(false);
-            toast.success('Album created successfully');
+            toast.success(t('manager.album_created_success'));
             
             // Refresh albums
             const albumsData = await managerService.getMyAlbums(finalChoirId);
@@ -177,7 +179,7 @@ export default function Content() {
             }
             
             handleCloseEditAlbumDialog();
-            toast.success('Album updated successfully');
+            toast.success(t('manager.album_updated_success'));
             
             // Refresh albums
             const albumsData = await managerService.getMyAlbums(finalChoirId);
@@ -254,7 +256,7 @@ export default function Content() {
             }
             
             handleCloseEditTrackDialog();
-            toast.success('Track updated successfully');
+            toast.success(t('manager.track_updated_success'));
             
             // Refresh tracks
             const tracksData = await managerService.getMyTracksByChoir(finalChoirId);
@@ -292,7 +294,7 @@ export default function Content() {
             }
             
             setIsUploadTrackDialogOpen(false);
-            toast.success('Track uploaded successfully');
+            toast.success(t('manager.track_uploaded_success'));
             
             // Refresh tracks
             const tracksData = await managerService.getMyTracksByChoir(finalChoirId);
@@ -315,10 +317,10 @@ export default function Content() {
                     {/* Header */}
                     <div className="manager-header">
                         <Link href="/manager/choirs" className="manager-back-link">
-                            ← Back to Choirs
+                            ← {t('manager.back_to_choirs')}
                         </Link>
-                        <h1>{choir.name || 'Choir'} - Content Manager</h1>
-                        <p>Manage albums and tracks for this choir</p>
+                        <h1>{choir.name || 'Choir'} - {t('manager.content_manager')}</h1>
+                        <p>{t('manager.manage_albums_tracks')}</p>
                     </div>
 
                     {/* Quick Stats */}
@@ -327,14 +329,14 @@ export default function Content() {
                             <span className="manager-stat-icon">💿</span>
                             <div>
                                 <div className="manager-stat-value blue">{loading ? '—' : albums.length}</div>
-                                <div className="manager-stat-label">Albums</div>
+                                <div className="manager-stat-label">{t('manager.albums')}</div>
                             </div>
                         </div>
                         <div className="manager-stat-card">
                             <span className="manager-stat-icon">🎵</span>
                             <div>
                                 <div className="manager-stat-value green">{loading ? '—' : tracks.length}</div>
-                                <div className="manager-stat-label">Total Tracks</div>
+                                <div className="manager-stat-label">{t('manager.total_tracks')}</div>
                             </div>
                         </div>
                     </div>
@@ -342,9 +344,9 @@ export default function Content() {
                     {/* Albums Section */}
                     <div style={{ marginBottom: 'var(--spacing-2xl)' }}>
                         <div className="manager-section-header">
-                            <h2>Albums</h2>
+                            <h2>{t('manager.albums')}</h2>
                             <button onClick={handleCreateAlbum} className="manager-primary-button">
-                                + Create Album
+                                + {t('manager.create_album')}
                             </button>
                         </div>
 
@@ -355,12 +357,12 @@ export default function Content() {
                         ) : albums.length === 0 ? (
                             <div className="manager-empty-state">
                                 <div className="manager-empty-icon">💿</div>
-                                <h3 className="manager-empty-title">No albums yet</h3>
+                                <h3 className="manager-empty-title">{t('manager.no_albums_yet')}</h3>
                                 <p className="manager-empty-description">
-                                    Create your first album to start organizing your tracks
+                                    {t('manager.create_first_album')}
                                 </p>
                                 <button onClick={handleCreateAlbum} className="manager-primary-button">
-                                    Create First Album
+                                    {t('manager.create_first_album_btn')}
                                 </button>
                             </div>
                         ) : (
@@ -391,13 +393,13 @@ export default function Content() {
                                                 href={`/manager/choirs/${finalChoirId}/albums/${album.id}/tracks`}
                                                 className="manager-album-action-button"
                                             >
-                                                View Tracks
+                                                {t('manager.view_tracks')}
                                             </Link>
                                             <button 
                                                 onClick={() => handleEditAlbum(album)}
                                                 className="manager-album-action-button"
                                             >
-                                                Edit
+                                                {t('manager.edit')}
                                             </button>
                                         </div>
                                     </div>
@@ -409,9 +411,9 @@ export default function Content() {
                     {/* Tracks Section */}
                     <div>
                         <div className="manager-section-header">
-                            <h2>Recent Tracks</h2>
+                            <h2>{t('manager.recent_tracks')}</h2>
                             <button onClick={handleUploadTrack} className="manager-primary-button">
-                                + Upload Track
+                                + {t('manager.upload_track')}
                             </button>
                         </div>
 
@@ -422,12 +424,12 @@ export default function Content() {
                         ) : tracks.length === 0 ? (
                             <div className="manager-empty-state">
                                 <div className="manager-empty-icon">🎵</div>
-                                <h3 className="manager-empty-title">No tracks yet</h3>
+                                <h3 className="manager-empty-title">{t('manager.no_tracks_yet')}</h3>
                                 <p className="manager-empty-description">
-                                    Upload your first track to start sharing your music
+                                    {t('manager.upload_first_track')}
                                 </p>
                                 <button onClick={handleUploadTrack} className="manager-primary-button">
-                                    Upload First Track
+                                    {t('manager.upload_first_track_btn')}
                                 </button>
                             </div>
                         ) : (
@@ -470,7 +472,7 @@ export default function Content() {
                                                 className="manager-track-edit-button"
                                                 onClick={() => handleEditTrack(track)}
                                             >
-                                                Edit
+                                                {t('manager.edit')}
                                             </button>
                                         </div>
                                     </div>

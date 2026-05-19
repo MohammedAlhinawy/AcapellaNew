@@ -9,9 +9,11 @@ import CustomAlertDialog from '../../Components/CustomAlertDialog';
 import '../../../css/listener.css';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import { useAudio } from '../../Context/AudioContext';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function PlaylistView() {
     const { isPlaying, togglePlay, playAllTracks, currentTrack } = useAudio();
+    const { t } = useTranslation();
 
     const { props } = usePage();
     // eslint-disable-next-line react/prop-types
@@ -27,7 +29,7 @@ export default function PlaylistView() {
             try {
                 const response = await apiService.get('/users/me');
                 if (!response.data?.data?.is_premium) {
-                    toast.error('Playlists are a Premium feature');
+                    toast.error(t('playlist_view.premium_feature'));
                     router.visit('/payments?plan=monthly');
                 }
             } catch {
@@ -35,7 +37,7 @@ export default function PlaylistView() {
             }
         };
         checkPremium();
-    }, []);
+    }, [t]);
 
     const fetchPlaylist = async () => {
         try {
@@ -44,7 +46,7 @@ export default function PlaylistView() {
             setPlaylist(data);
         } catch (error) {
             console.error('Error fetching playlist:', error);
-            toast.error('Failed to load playlist');
+            toast.error(t('playlist_view.failed_to_load'));
         } finally {
             setLoading(false);
         }
@@ -68,11 +70,11 @@ export default function PlaylistView() {
     const confirmDeletePlaylist = async () => {
         try {
             await playlistService.deletePlaylist(playlistId);
-            toast.success('Playlist deleted');
+            toast.success(t('playlist_view.deleted'));
             router.get('/library');
         } catch (error) {
             console.error('Error deleting playlist:', error);
-            toast.error('Failed to delete playlist');
+            toast.error(t('playlist_view.failed_to_delete'));
         }
     };
 
@@ -81,7 +83,7 @@ export default function PlaylistView() {
         return (
             <MainLayout>
                 <div className="listener-page">
-                    <div className="loading-state">Loading playlist...</div>
+                    <div className="loading-state">{t('playlist_view.loading')}</div>
                 </div>
             </MainLayout>
         );
@@ -91,7 +93,7 @@ export default function PlaylistView() {
         return (
             <MainLayout>
                 <div className="listener-page">
-                    <div className="empty-state">Playlist not found</div>
+                    <div className="empty-state">{t('playlist_view.not_found')}</div>
                 </div>
             </MainLayout>
         );
@@ -106,7 +108,7 @@ export default function PlaylistView() {
         } else if (tracks.length > 0) {
             playAllTracks(tracks);
         } else {
-            toast.error('Playlist is empty');
+            toast.error(t('playlist_view.empty'));
         }
     };
 
@@ -126,7 +128,7 @@ export default function PlaylistView() {
                         {playlist.description && (
                             <p className="album-year">{playlist.description}</p>
                         )}
-                        <p className="album-year">Playlist • {tracks.length} songs</p>
+                        <p className="album-year">{t('playlist_view.label')} • {tracks.length} {t('playlist_view.songs')}</p>
                         <button
                             onClick={handleDeletePlaylist}
                             style={{
@@ -140,17 +142,17 @@ export default function PlaylistView() {
                                 fontSize: '0.85rem',
                             }}
                         >
-                            Delete Playlist
+                            {t('playlist_view.delete')}
                         </button>
 
                         <CustomAlertDialog
                             isOpen={isDeleteAlertOpen}
                             onClose={() => setIsDeleteAlertOpen(false)}
                             onConfirm={confirmDeletePlaylist}
-                            title="Delete Playlist"
-                            message="Are you sure you want to delete this playlist? This action cannot be undone."
-                            confirmText="Delete"
-                            cancelText="Cancel"
+                            title={t('playlist_view.delete_confirm_title')}
+                            message={t('playlist_view.delete_confirm_message')}
+                            confirmText={t('playlist_view.delete_confirm')}
+                            cancelText={t('common.cancel')}
                             type="danger"
                         />
                     </div>
@@ -180,14 +182,14 @@ export default function PlaylistView() {
                                         )}
                                     </div>
                                     <div className="track-info">
-                                        <span className="track-name">{track?.title || 'Unknown Track'}</span>
+                                        <span className="track-name">{track?.title || t('play_track.unknown_track')}</span>
                                         <span className="track-album">
-                                            {track?.album?.title || 'Unknown Album'} • <span className="track-duration">{track?.duration_label || '0:00'}</span>
+                                            {track?.album?.title || t('album.unknown_album')} • <span className="track-duration">{track?.duration_label || '0:00'}</span>
                                         </span>
                                     </div>
 
                                     {track?.is_premium && (
-                                        <span className="premium-badge">Premium</span>
+                                        <span className="premium-badge">{t('album.premium')}</span>
                                     )}
 
                                     <SheetTrackDropdown
@@ -201,7 +203,7 @@ export default function PlaylistView() {
                             ))
                         ) : (
                             <div className="empty-state">
-                                <p>No tracks in this playlist yet</p>
+                                <p>{t('playlist_view.no_tracks')}</p>
                             </div>
                         )}
                     </div>

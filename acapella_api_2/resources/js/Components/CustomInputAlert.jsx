@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
+import useTranslation from '../hooks/useTranslation';
 
-export default function CustomInputAlert({ isOpen, onClose, onConfirm, title, message, placeholder = '', confirmText = 'Confirm', cancelText = 'Cancel', type = 'primary' }) {
+export default function CustomInputAlert({ isOpen, onClose, onConfirm, title, message, placeholder = '', confirmText, cancelText, type = 'primary' }) {
+    const { t } = useTranslation();
     const [isMobile, setIsMobile] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    
+    const finalConfirmText = confirmText || t('common.confirm');
+    const finalCancelText = cancelText || t('common.cancel');
 
     useEffect(() => {
         const checkMobile = () => {
@@ -57,14 +62,14 @@ export default function CustomInputAlert({ isOpen, onClose, onConfirm, title, me
                         />
                         <div className="draggable-box-actions">
                             <button onClick={onClose} className="draggable-box-button draggable-box-button-secondary">
-                                {cancelText}
+                                {finalCancelText}
                             </button>
                             <button 
                                 onClick={handleConfirm} 
                                 className={`draggable-box-button draggable-box-button-${type}`}
                                 disabled={!inputValue.trim()}
                             >
-                                {confirmText}
+                                {finalConfirmText}
                             </button>
                         </div>
                     </div>
@@ -93,14 +98,14 @@ export default function CustomInputAlert({ isOpen, onClose, onConfirm, title, me
                     />
                     <div className="dialog-actions">
                         <button onClick={onClose} className="dialog-button dialog-button-secondary">
-                            {cancelText}
+                            {finalCancelText}
                         </button>
                         <button 
                             onClick={handleConfirm} 
                             className={`dialog-button dialog-button-${type}`}
                             disabled={!inputValue.trim()}
                         >
-                            {confirmText}
+                            {finalConfirmText}
                         </button>
                     </div>
                 </div>

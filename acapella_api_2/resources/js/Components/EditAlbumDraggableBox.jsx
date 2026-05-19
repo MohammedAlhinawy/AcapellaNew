@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../css/dialog.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function EditAlbumDraggableBox({ isOpen, onClose, onSave, album }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         title: '',
         year: new Date().getFullYear(),
@@ -54,12 +56,12 @@ export default function EditAlbumDraggableBox({ isOpen, onClose, onSave, album }
         <div className="draggable-box-overlay" onClick={handleOverlayClick}>
             <div className="draggable-box-container" onClick={(e) => e.stopPropagation()}>
                 <div className="draggable-box-header">
-                    <h2>Edit Album</h2>
+                    <h2>{t('dialog.edit_album')}</h2>
                     <button onClick={onClose} className="draggable-box-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="draggable-box-form">
                     <div className="draggable-box-field">
-                        <label>Album Cover</label>
+                        <label>{t('dialog.album_cover')}</label>
                         <input
                             type="file"
                             accept="image/*"
@@ -70,35 +72,35 @@ export default function EditAlbumDraggableBox({ isOpen, onClose, onSave, album }
                             <div className="image-preview" style={{ marginTop: '10px' }}>
                                 <img
                                     src={imagePreview}
-                                    alt="Preview"
+                                    alt={t('dialog.preview')}
                                     style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '8px' }}
                                 />
                             </div>
                         )}
                     </div>
                     <div className="draggable-box-field">
-                        <label>Album Title</label>
+                        <label>{t('dialog.album_title')}</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             className="draggable-box-input"
                             required
-                            placeholder="Enter album title"
+                            placeholder={t('dialog.enter_album_title')}
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Genre</label>
+                        <label>{t('dialog.genre')}</label>
                         <input
                             type="text"
                             value={formData.genre}
                             onChange={(e) => setFormData({ ...formData, genre: e.target.value })}
                             className="draggable-box-input"
-                            placeholder="Enter genre (e.g., Gospel, Worship)"
+                            placeholder={t('dialog.enter_genre')}
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Year</label>
+                        <label>{t('dialog.year')}</label>
                         <input
                             type="number"
                             value={formData.year}
@@ -124,10 +126,10 @@ export default function EditAlbumDraggableBox({ isOpen, onClose, onSave, album }
                     */}
                     <div className="draggable-box-actions">
                         <button type="button" onClick={onClose} className="draggable-box-button draggable-box-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="draggable-box-button draggable-box-button-primary">
-                            Update Album
+                            {t('dialog.update_album')}
                         </button>
                     </div>
                 </form>

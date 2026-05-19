@@ -5,6 +5,7 @@ import { toast } from '../../Components/ToastContainer';
 import '../../../css/listener.css';
 import '../../../css/payments-donate.css';
 import { FaShieldAlt, FaCheckCircle, FaMobileAlt } from 'react-icons/fa';
+import useTranslation from '../../hooks/useTranslation';
 
 const PLANS = {
     monthly: {
@@ -22,6 +23,7 @@ const PLANS = {
 };
 
 export default function Payments() {
+    const { t } = useTranslation();
     const [plan, setPlan] = useState('monthly');
     const [phone, setPhone] = useState('');
     const [loading, setLoading] = useState(false);
@@ -52,14 +54,14 @@ export default function Payments() {
         e.preventDefault();
 
         if (!phone) {
-            toast.error('Please enter your phone number');
+            toast.error(t('payments.enter_phone'));
             return;
         }
 
         // Accept both formats: +255XXXXXXXXX or 0XXXXXXXXX
         const phoneRegex = /^(\+255[0-9]{9}|0[0-9]{9})$/;
         if (!phoneRegex.test(phone)) {
-            toast.error('Please enter a valid Tanzanian phone number (+255XXXXXXXXX or 0XXXXXXXXX)');
+            toast.error(t('payments.valid_phone'));
             return;
         }
 
@@ -74,10 +76,10 @@ export default function Payments() {
             });
 
             setSubscriptionId(response.data.data.subscription_id);
-            toast.success('Payment initiated. Please confirm on your phone.');
+            toast.success(t('payments.payment_initiated'));
         } catch (error) {
             console.error('Payment initiation error:', error);
-            toast.error(error.response?.data?.message || 'Failed to initiate payment');
+            toast.error(error.response?.data?.message || t('payments.failed_payment'));
         } finally {
             setLoading(false);
         }
@@ -91,19 +93,19 @@ export default function Payments() {
         <MainLayout>
             <div className="pd-page">
                 <header className="pd-hero">
-                    <span className="pd-hero-eyebrow">✦ Acapella Premium</span>
-                    <h1>Complete Your Payment</h1>
-                    <p>Secure your premium subscription and unlock the full Acapella experience.</p>
+                    <span className="pd-hero-eyebrow">{t('payments.premium_badge')}</span>
+                    <h1>{t('payments.complete_payment')}</h1>
+                    <p>{t('payments.secure_subscription')}</p>
                 </header>
 
                 <div className="pd-stack">
                     {/* Selected plan */}
                     <section className="pd-card luxe">
-                        <div className="pd-card-label">Selected Plan</div>
-                        <div className="pd-plan-name">{selectedPlan.name}</div>
+                        <div className="pd-card-label">{t('payments.selected_plan')}</div>
+                        <div className="pd-plan-name">{t(`payments.${plan}`)}</div>
                         <div className="pd-plan-price">
                             <span className="pd-price-num">{selectedPlan.price.toLocaleString()}</span>
-                            <span className="pd-price-meta">{selectedPlan.currency} · {selectedPlan.period}</span>
+                            <span className="pd-price-meta">{selectedPlan.currency} · {t(`payments.per_${plan === 'monthly' ? 'month' : 'year'}`)}</span>
                         </div>
                         <div className="pd-switch-row">
                             <button
@@ -114,17 +116,17 @@ export default function Payments() {
                                     window.history.replaceState(null, '', `/payments?plan=${altPlan}`);
                                 }}
                             >
-                                Switch to {altPlan === 'monthly' ? 'Monthly' : 'Yearly'}
+                                {t('payments.switch_to')} {t(`payments.${altPlan}`)}
                             </button>
                         </div>
                     </section>
 
                     {/* Payment details */}
                     <section className="pd-card">
-                        <h2>Payment Details</h2>
+                        <h2>{t('payments.payment_details')}</h2>
                         <form onSubmit={handleInitiatePayment} className="pd-form">
                             <div className="pd-field">
-                                <label htmlFor="phone">Phone Number</label>
+                                <label htmlFor="phone">{t('payments.phone_number')}</label>
                                 <input
                                     id="phone"
                                     type="tel"
@@ -134,23 +136,23 @@ export default function Payments() {
                                     required
                                 />
                                 <span className="pd-field-hint">
-                                    Format: +255XXXXXXXXX or 0XXXXXXXXX
+                                    {t('payments.phone_format')}
                                 </span>
                             </div>
 
                             <div className="pd-field">
-                                <label>Payment Method</label>
+                                <label>{t('payments.payment_method')}</label>
                                 <div className="pd-method">
                                     <div className="pd-method-icon"><FaMobileAlt /></div>
                                     <div>
-                                        <div className="pd-method-title">Mobile Money</div>
-                                        <div className="pd-method-meta">M-Pesa · Tigo Pesa · Airtel Money · Halopesa</div>
+                                        <div className="pd-method-title">{t('payments.mobile_money')}</div>
+                                        <div className="pd-method-meta">{t('payments.mobile_money_providers')}</div>
                                     </div>
                                 </div>
                             </div>
 
                             <button type="submit" className="pd-cta" disabled={loading}>
-                                {loading ? 'Processing…' : `Pay ${selectedPlan.price.toLocaleString()} TZS`}
+                                {loading ? t('payments.processing') : `${t('payments.pay_amount')} ${selectedPlan.price.toLocaleString()} TZS`}
                             </button>
                         </form>
                     </section>
@@ -159,15 +161,15 @@ export default function Payments() {
                         <section className="pd-card">
                             <div className="pd-status">
                                 <div className="pd-status-icon"><FaCheckCircle /></div>
-                                <h3>Payment Initiated</h3>
-                                <p>Check your phone and approve the USSD prompt to complete payment.</p>
-                                <div className="pd-status-ref">Transaction ID: {subscriptionId}</div>
+                                <h3>{t('payments.payment_initiated_title')}</h3>
+                                <p>{t('payments.check_phone')}</p>
+                                <div className="pd-status-ref">{t('payments.transaction_id')} {subscriptionId}</div>
                             </div>
                         </section>
                     )}
 
                     <div className="pd-trust">
-                        <FaShieldAlt className="pd-trust-icon" /> Secured by Mongike Payment Gateway
+                        <FaShieldAlt className="pd-trust-icon" /> {t('payments.secured_by')}
                     </div>
                 </div>
             </div>

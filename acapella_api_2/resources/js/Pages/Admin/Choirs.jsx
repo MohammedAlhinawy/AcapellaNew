@@ -3,8 +3,10 @@ import MainLayout from '../../Layout/MainLayout';
 import apiService from '../../Services/apiService';
 import '../../../css/dialog.css';
 import '../../../css/admin.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function AdminChoirs() {
+    const { t } = useTranslation();
     const [choirs, setChoirs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedChoir, setSelectedChoir] = useState(null);
@@ -35,7 +37,7 @@ export default function AdminChoirs() {
             const response = await apiService.get('/choirs');
             setChoirs(response.data.data?.data || []);
         } catch {
-            alert('Failed to update choir verification status');
+            alert(t('admin.failed_update_verification'));
         }
     };
 
@@ -55,8 +57,8 @@ export default function AdminChoirs() {
                 <div className="admin-page">
                     <div className="admin-container">
                         <div className="admin-header">
-                            <h1>Choir Verification Center</h1>
-                            <p>Loading...</p>
+                            <h1>{t('admin.choir_verification_center')}</h1>
+                            <p>{t('admin.loading')}</p>
                         </div>
                     </div>
                 </div>
@@ -69,8 +71,8 @@ export default function AdminChoirs() {
             <div className="admin-page">
                 <div className="admin-container">
                     <div className="admin-header">
-                        <h1>Choir Verification Center</h1>
-                        <p>Review and verify choir profiles on the platform</p>
+                        <h1>{t('admin.choir_verification_center')}</h1>
+                        <p>{t('admin.review_verify_choirs')}</p>
                     </div>
 
                     {/* Stats */}
@@ -79,21 +81,21 @@ export default function AdminChoirs() {
                             <span className="admin-stat-icon">🎶</span>
                             <div>
                                 <div className="admin-stat-value blue">{choirs.length}</div>
-                                <div className="admin-stat-label">Total Choirs</div>
+                                <div className="admin-stat-label">{t('admin.total_choirs')}</div>
                             </div>
                         </div>
                         <div className="admin-stat-card">
                             <span className="admin-stat-icon">✓</span>
                             <div>
                                 <div className="admin-stat-value green">{choirs.filter(c => c.is_verified).length}</div>
-                                <div className="admin-stat-label">Verified</div>
+                                <div className="admin-stat-label">{t('admin.verified')}</div>
                             </div>
                         </div>
                         <div className="admin-stat-card">
                             <span className="admin-stat-icon">⏳</span>
                             <div>
                                 <div className="admin-stat-value amber">{choirs.filter(c => !c.is_verified).length}</div>
-                                <div className="admin-stat-label">Pending</div>
+                                <div className="admin-stat-label">{t('admin.pending')}</div>
                             </div>
                         </div>
                     </div>
@@ -103,15 +105,15 @@ export default function AdminChoirs() {
                         <button
                             className={`admin-filter-tab${filter === 'all' ? ' active' : ''}`}
                             onClick={() => setFilter('all')}
-                        >All Choirs</button>
+                        >{t('admin.all_choirs')}</button>
                         <button
                             className={`admin-filter-tab${filter === 'verified' ? ' active' : ''}`}
                             onClick={() => setFilter('verified')}
-                        >Verified</button>
+                        >{t('admin.verified')}</button>
                         <button
                             className={`admin-filter-tab${filter === 'pending' ? ' active' : ''}`}
                             onClick={() => setFilter('pending')}
-                        >Pending</button>
+                        >{t('admin.pending')}</button>
                     </div>
 
                     {/* Choirs List */}
@@ -124,9 +126,9 @@ export default function AdminChoirs() {
                         return filteredChoirs.length === 0 ? (
                         <div className="admin-empty-state">
                             <div className="admin-empty-icon">🎶</div>
-                            <h3 className="admin-empty-title">No choirs yet</h3>
+                            <h3 className="admin-empty-title">{t('admin.no_choirs_yet')}</h3>
                             <p className="admin-empty-description">
-                                Choirs will appear here once they are registered
+                                {t('admin.choirs_appear_here')}
                             </p>
                         </div>
                         ) : (
@@ -149,7 +151,7 @@ export default function AdminChoirs() {
                                         <div className="admin-choir-name-row">
                                             <h3 className="admin-choir-name">{choir.name}</h3>
                                             {choir.is_verified && (
-                                                <span className="admin-choir-badge">✓ Verified</span>
+                                                <span className="admin-choir-badge">✓ {t('admin.verified')}</span>
                                             )}
                                         </div>
                                         <p className="admin-choir-location">📍 {choir.location}</p>
@@ -163,13 +165,13 @@ export default function AdminChoirs() {
                                             onClick={() => toggleVerification(choir.id, choir.is_verified)}
                                             className={choir.is_verified ? 'admin-choir-revoke-button' : 'admin-choir-verify-button'}
                                         >
-                                            {choir.is_verified ? 'Revoke' : 'Verify'}
+                                            {choir.is_verified ? t('admin.revoke') : t('admin.verify')}
                                         </button>
                                         <button
                                             onClick={() => handleViewDetails(choir)}
                                             className="admin-choir-view-button"
                                         >
-                                            View Details
+                                            {t('admin.view_details')}
                                         </button>
                                     </div>
                                 </div>
@@ -184,7 +186,7 @@ export default function AdminChoirs() {
                     <div className="dialog-overlay" style={{ zIndex: 9999 }}>
                         <div className="dialog-container">
                             <div className="dialog-header">
-                                <h2>Choir Details</h2>
+                                <h2>{t('admin.choir_details')}</h2>
                                 <button onClick={handleCloseDetailsDialog} className="dialog-close-button">×</button>
                             </div>
                             <div className="dialog-body">
@@ -206,12 +208,12 @@ export default function AdminChoirs() {
                                     <p className="admin-choir-detail-location">📍 {selectedChoir.location}</p>
                                     <div className="admin-choir-detail-status">
                                         <span className={`admin-choir-detail-badge ${selectedChoir.is_verified ? 'verified' : 'pending'}`}>
-                                            {selectedChoir.is_verified ? '✓ Verified' : '⏳ Pending Verification'}
+                                            {selectedChoir.is_verified ? `✓ ${t('admin.verified')}` : `⏳ ${t('admin.pending')}`}
                                         </span>
                                     </div>
                                     {selectedChoir.bio && (
                                         <div className="admin-choir-detail-bio">
-                                            <label>Bio:</label>
+                                            <label>{t('admin.bio')}:</label>
                                             <p>{selectedChoir.bio}</p>
                                         </div>
                                     )}
@@ -220,14 +222,14 @@ export default function AdminChoirs() {
                                         <span>{selectedChoir.id}</span>
                                     </div>
                                     <div className="admin-choir-detail-meta">
-                                        <label>Created:</label>
+                                        <label>{t('admin.created')}:</label>
                                         <span>{new Date(selectedChoir.created_at).toLocaleDateString()}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="dialog-actions">
                                 <button onClick={handleCloseDetailsDialog} className="dialog-button dialog-button-primary">
-                                    Close
+                                    {t('admin.close')}
                                 </button>
                             </div>
                         </div>

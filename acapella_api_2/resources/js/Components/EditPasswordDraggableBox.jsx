@@ -2,8 +2,10 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from './ToastContainer';
 import '../../css/dialog.css';
+import useTranslation from '../hooks/useTranslation';
 
 export default function EditPasswordDraggableBox({ isOpen, onClose, onSave }) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         password: '',
         password_confirmation: '',
@@ -13,12 +15,12 @@ export default function EditPasswordDraggableBox({ isOpen, onClose, onSave }) {
         e.preventDefault();
         
         if (formData.password !== formData.password_confirmation) {
-            toast.error('Passwords do not match');
+            toast.error(t('dialog.passwords_mismatch'));
             return;
         }
 
         if (formData.password.length < 8) {
-            toast.error('Password must be at least 8 characters');
+            toast.error(t('dialog.password_min_length'));
             return;
         }
 
@@ -31,38 +33,38 @@ export default function EditPasswordDraggableBox({ isOpen, onClose, onSave }) {
         <div className="draggable-box-overlay">
             <div className="draggable-box-container">
                 <div className="draggable-box-header">
-                    <h2>Change Password</h2>
+                    <h2>{t('dialog.edit_password')}</h2>
                     <button onClick={onClose} className="draggable-box-close-button">×</button>
                 </div>
                 <form onSubmit={handleSubmit} className="draggable-box-form">
                     <div className="draggable-box-field">
-                        <label>New Password</label>
+                        <label>{t('dialog.new_password')}</label>
                         <input
                             type="password"
                             value={formData.password}
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             className="draggable-box-input"
-                            placeholder="At least 8 characters"
+                            placeholder={t('dialog.at_least_8_chars')}
                             required
                         />
                     </div>
                     <div className="draggable-box-field">
-                        <label>Confirm Password</label>
+                        <label>{t('dialog.confirm_password')}</label>
                         <input
                             type="password"
                             value={formData.password_confirmation}
                             onChange={(e) => setFormData({ ...formData, password_confirmation: e.target.value })}
                             className="draggable-box-input"
-                            placeholder="Confirm new password"
+                            placeholder={t('dialog.enter_confirm_password')}
                             required
                         />
                     </div>
                     <div className="draggable-box-actions">
                         <button type="button" onClick={onClose} className="draggable-box-button draggable-box-button-secondary">
-                            Cancel
+                            {t('common.cancel')}
                         </button>
                         <button type="submit" className="draggable-box-button draggable-box-button-primary">
-                            Change Password
+                            {t('dialog.change_password_btn')}
                         </button>
                     </div>
                 </form>

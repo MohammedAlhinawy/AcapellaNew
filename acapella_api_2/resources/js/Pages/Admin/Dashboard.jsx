@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import MainLayout from '../../Layout/MainLayout';
 import apiService from '../../Services/apiService';
 import '../../../css/admin.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Dashboard() {
+    const { t } = useTranslation();
     const [stats, setStats] = useState({
         total_users: 0,
         verified_choirs: 0,
@@ -32,20 +34,20 @@ export default function Dashboard() {
             <div className="admin-page">
                 <div className="admin-container">
                     <div className="admin-header">
-                        <h1>Admin Dashboard</h1>
-                        <p>Manage your Acapella platform</p>
+                        <h1>{t('admin.admin_dashboard')}</h1>
+                        <p>{t('admin.manage_platform')}</p>
                     </div>
 
                     {/* Stats Grid */}
                     <div className="admin-stats">
                         {[
-                            { label: 'Total Users', value: loading ? '—' : stats.total_users, icon: '👤', color: 'blue' },
-                            { label: 'Listeners', value: loading ? '—' : stats.total_listeners, icon: '🎧', color: 'green' },
-                            { label: 'Choir Managers', value: loading ? '—' : stats.total_choir_managers, icon: '�', color: 'amber' },
-                            { label: 'Premium Users', value: loading ? '—' : stats.premium_users, icon: '💳', color: 'purple' },
-                            { label: 'Total Choirs', value: loading ? '—' : stats.total_choirs, icon: '�', color: 'cyan' },
-                            { label: 'Verified Choirs', value: loading ? '—' : stats.verified_choirs, icon: '✓', color: 'emerald' },
-                            { label: 'Pending Choirs', value: loading ? '—' : stats.pending_choirs, icon: '⏳', color: 'orange' },
+                            { label: t('admin.total_users'), value: loading ? '—' : stats.total_users, icon: '👤', color: 'blue' },
+                            { label: t('admin.listeners'), value: loading ? '—' : stats.total_listeners, icon: '🎧', color: 'green' },
+                            { label: t('admin.choir_managers'), value: loading ? '—' : stats.total_choir_managers, icon: '', color: 'amber' },
+                            { label: t('admin.premium_users'), value: loading ? '—' : stats.premium_users, icon: '💳', color: 'purple' },
+                            { label: t('admin.total_choirs'), value: loading ? '—' : stats.total_choirs, icon: '', color: 'cyan' },
+                            { label: t('admin.verified_choirs'), value: loading ? '—' : stats.verified_choirs, icon: '✓', color: 'emerald' },
+                            { label: t('admin.pending_choirs'), value: loading ? '—' : stats.pending_choirs, icon: '⏳', color: 'orange' },
                         ].map((stat) => (
                             <div key={stat.label} className="admin-stat-card">
                                 <span className="admin-stat-icon">{stat.icon}</span>
@@ -59,12 +61,12 @@ export default function Dashboard() {
 
                     {/* Quick Actions */}
                     <div className="admin-quick-actions">
-                        <h2>Quick Actions</h2>
+                        <h2>{t('admin.quick_actions')}</h2>
                         <div className="admin-action-buttons">
                             {[
-                                { label: 'Manage Users', href: '/admin/users' },
-                                { label: 'Verify Choirs', href: '/admin/choirs' },
-                                { label: 'View Reports', href: '/admin/reports' },
+                                { label: t('admin.manage_users'), href: '/admin/users' },
+                                { label: t('admin.verify_choirs_action'), href: '/admin/choirs' },
+                                { label: t('admin.view_reports'), href: '/admin/reports' },
                             ].map((action) => (
                                 <a
                                     key={action.href}

@@ -3,8 +3,10 @@ import { router } from '@inertiajs/react';
 import PropTypes from 'prop-types';
 import '../../../css/public.css';
 import '../../../css/guest.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Premium({ verifiedKwayaCount = 0 }) {
+    const { t } = useTranslation();
     return (
         <MainLayout>
             <div className="public-page public-container">
@@ -12,19 +14,19 @@ export default function Premium({ verifiedKwayaCount = 0 }) {
                     <h2 className="public-header h1">
                         Elevate your spiritual <br />
                         <span className="public-header gradient-text">
-                            listening experience.
+                            {t('public.elevate_experience')}
                         </span>
                     </h2>
                     <p className="public-header p">
-                        Fungua uwezo wa kusikiliza nyuma ya skrini na kupakua nyimbo huku ukisaidia kwaya zako za kitanzania unazozipenda kupitia Mongike.
+                        {t('public.unlock_premium_desc')}
                     </p>
                 </div>
 
                 <div className="public-grid">
                     {/* Free Tier */}
                     <div className="public-card">
-                        <h3 className="public-card h3">Basic Access</h3>
-                        <p className="public-card sub">Free forever</p>
+                        <h3 className="public-card h3">{t('public.basic_access')}</h3>
+                        <p className="public-card sub">{t('public.free_forever')}</p>
                         
                         <div className="public-card price">
                             TSh 0<span className="public-card price span">/mo</span>
@@ -33,105 +35,106 @@ export default function Premium({ verifiedKwayaCount = 0 }) {
                         <ul className="public-card feature-list">
                             <li className="public-card feature-list item">
                                 <svg className="public-card feature-list svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Streaming with ads
+                                {t('public.streaming_ads')}
                             </li>
                             <li className="public-card feature-list item">
                                 <svg className="public-card feature-list svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Browse full catalog & choirs
+                                {t('public.browse_catalog')}
                             </li>
                             <li className="public-card feature-list item">
                                 <svg className="public-card feature-list svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Up to 5 tracks in queue
+                                {t('public.up_to_tracks')}
                             </li>
                             <li className="public-card feature-list item disabled">
                                 <svg className="public-card feature-list svg disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                No Background Play (pauses on tab switch)
+                                {t('public.no_background')}
                             </li>
                             <li className="public-card feature-list item disabled">
                                 <svg className="public-card feature-list svg disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                No Liked Songs
+                                {t('public.no_liked')}
                             </li>
                             <li className="public-card feature-list item disabled">
                                 <svg className="public-card feature-list svg disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                No Playlists
+                                {t('public.no_playlists')}
                             </li>
                             <li className="public-card feature-list item disabled">
                                 <svg className="public-card feature-list svg disabled" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                No Downloads
+                                {t('public.no_downloads')}
                             </li>
                         </ul>
 
                         <button className="public-card button">
-                            Current Plan
+                            {t('public.current_plan')}
                         </button>
                     </div>
 
                     {/* Premium Tier */}
                     <div className="public-card feature">
                         <div className="public-card badge-recommended">
-                            Recommended
+                            {t('public.recommended')}
                         </div>
 
                         <div className="public-card feature-glow"></div>
 
-                        <h3 className="public-card h3 premium">Premium Unlocked</h3>
-                        <p className="public-card sub premium">Billed monthly via Mobile Money</p>
+                        <h3 className="public-card h3 premium">{t('public.premium_unlocked')}</h3>
+                        <p className="public-card sub premium">{t('public.billed_monthly')}</p>
                         
                         <div className="public-card price premium">
                             TSh 5,000<span className="public-card price span">/mo</span>
                         </div>
-                        <p className="public-card price-note">Prices inclusive of VAT. Cancel anytime.</p>
+                        <p className="public-card price-note">{t('public.prices_inclusive')}</p>
 
                         <ul className="public-card feature-list premium">
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Uninterrupted Background Play
+                                {t('public.background_play')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                High-Quality Bitrates
+                                {t('public.high_quality')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Unlimited Track Downloads
+                                {t('public.unlimited_downloads')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Like songs & build your Liked library
+                                {t('public.liked_songs')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Create unlimited personal Playlists
+                                {t('public.unlimited_playlists')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Unlimited queue length
+                                {t('public.unlimited_queue')}
                             </li>
                             <li className="public-card feature-list item premium">
                                 <svg className="public-card feature-list svg premium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                Support {verifiedKwayaCount > 0 ? verifiedKwayaCount : 'our'} verified Kwaya creators directly
+                                {t('public.support_creators', { count: verifiedKwayaCount > 0 ? verifiedKwayaCount : 'our' })}
                             </li>
                         </ul>
 
                         <button className="public-card premium-btn" onClick={() => router.visit('/payments?plan=monthly')}>
-                            Subscribe with Mobile Money
+                            {t('public.subscribe_mobile')}
                             <svg className="public-card premium-btn svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         </button>
 
                         <div className="public-card payment-methods">
                             {/* Generic payment operator pill boxes representing Snippe */}
                             <span className="span">M-Pesa</span>
-                            <span className="span">Tigo Pesa</span>
-                            <span className="span">Airtel</span>
+                            <span className="span">Mix by Yas</span>
+                            <span className="span">HaloPesa</span>
+                            <span className="span">Airtel Money</span>
                         </div>
                     </div>
                 </div>
 
                 <div style={{ marginTop: '48px', textAlign: 'center', padding: '32px 24px', background: 'linear-gradient(135deg, rgba(184,134,11,0.15), rgba(184,134,11,0.05))', borderRadius: '16px', border: '1px solid rgba(184,134,11,0.3)' }}>
                     <div style={{ fontSize: '40px', marginBottom: '12px' }}>☕</div>
-                    <h3 style={{ color: '#fff', marginBottom: '8px', fontSize: '1.4rem' }}>Not ready for Premium?</h3>
+                    <h3 style={{ color: '#fff', marginBottom: '8px', fontSize: '1.4rem' }}>{t('public.not_ready_premium')}</h3>
                     <p style={{ color: 'rgba(255,255,255,0.7)', marginBottom: '20px', maxWidth: '500px', margin: '0 auto 20px' }}>
-                        You can still support us with a one-time donation — any amount helps us keep the music playing.
+                        {t('public.donation_desc')}
                     </p>
                     <button
                         onClick={() => router.visit('/donate')}
@@ -146,7 +149,7 @@ export default function Premium({ verifiedKwayaCount = 0 }) {
                             fontSize: '1rem',
                         }}
                     >
-                        ❤ Buy Us a Coffee
+                        {t('public.buy_coffee')}
                     </button>
                 </div>
             </div>

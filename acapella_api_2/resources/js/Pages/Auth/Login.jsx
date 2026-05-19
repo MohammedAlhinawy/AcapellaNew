@@ -4,8 +4,10 @@ import apiService from '../../Services/apiService';
 import { db, STORAGE_KEYS } from '../../Utils/indexedDB';
 import { toast } from '../../Components/ToastContainer';
 import '../../../css/auth.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function Login() {
+    const { t } = useTranslation();
     const [showPassword, setShowPassword] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [errors, setErrors] = useState({});
@@ -45,7 +47,7 @@ export default function Login() {
             // Dispatch auth changed event for Nav component
             window.dispatchEvent(new CustomEvent('auth-changed'));
 
-            toast.success('Umeingia kwa mafanikio!');
+            toast.success(t('auth.login_success'));
 
             // Redirect based on user role
             const redirectPath = getRedirectPath(user.role);
@@ -53,13 +55,13 @@ export default function Login() {
         } catch (error) {
             if (error.response?.data?.errors) {
                 setErrors(error.response.data.errors);
-                toast.error('Tafadhali angalia fomu kwa makosa.');
+                toast.error(t('auth.check_form_errors'));
             } else if (error.response?.data?.message) {
                 setErrors({ general: error.response.data.message });
                 toast.error(error.response.data.message);
             } else {
-                setErrors({ general: 'An error occurred. Please try again.' });
-                toast.error('Kuna hitilafu. Tafadhali jaribu tena.');
+                setErrors({ general: t('auth.error_occurred') });
+                toast.error(t('auth.error_occurred'));
             }
         } finally {
             setProcessing(false);
@@ -91,11 +93,11 @@ export default function Login() {
                 </div>
 
                 <div className="auth-card">
-                    <h2 className="auth-card h2">Welcome back</h2>
+                    <h2 className="auth-card h2">{t('auth.welcome_back')}</h2>
                     
                     <form onSubmit={submit} className="auth-form">
                         <div>
-                            <label className="auth-form label">Email</label>
+                            <label className="auth-form label">{t('auth.email')}</label>
                             <input
                                 type="email"
                                 value={data.email}
@@ -107,7 +109,7 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <label className="auth-form label">Password</label>
+                            <label className="auth-form label">{t('auth.password')}</label>
                             <div className="password-input-wrapper">
                                 <input
                                     type={showPassword ? 'text' : 'password'}
@@ -144,10 +146,10 @@ export default function Login() {
                                     onChange={handleCheckboxChange('remember')}
                                     className="auth-form checkbox"
                                 />
-                                <span className="checkbox-label span">Remember me</span>
+                                <span className="checkbox-label span">{t('auth.remember_me')}</span>
                             </label>
                             <Link href="/forgot-password" className="forgot-password-link">
-                                Forgot password?
+                                {t('auth.forgot_password')}
                             </Link>
                         </div>
 
@@ -155,15 +157,15 @@ export default function Login() {
                             disabled={processing}
                             className="auth-form button"
                         >
-                            Log in
+                            {t('auth.login')}
                             {/* <svg className="auth-form button svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> */}
                         </button>
                     </form>
 
                     <div className="auth-footer">
-                        Don&apos;t have an account?{' '}
+                        {t('auth.no_account')}{' '}
                         <Link href="/register" className="auth-footer link-text">
-                            Sign up for free
+                            {t('auth.sign_up')}
                         </Link>
                     </div>
                 </div>

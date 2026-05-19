@@ -12,11 +12,13 @@ import SubscriptionDialog from '../../Components/SubscriptionDialog';
 import SubscriptionDraggableBox from '../../Components/SubscriptionDraggableBox';
 import CustomAlertDialog from '../../Components/CustomAlertDialog';
 import LanguageSelector from '../../Components/LanguageSelector';
+import useTranslation from '../../hooks/useTranslation';
 import { FaRegEnvelope } from "react-icons/fa";
 import '../../../css/listener.css';
 import '../../../css/profile.css';
 
 export default function Settings() {
+    const { t } = useTranslation();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
@@ -42,14 +44,14 @@ export default function Settings() {
                 setUser(response.data.data);
             } catch (error) {
                 console.error('Error fetching user:', error);
-                toast.error('Failed to load profile');
+                toast.error(t('settings.failed_to_load_profile'));
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUser();
-    }, []);
+    }, [t]);
 
     const handleLogout = async () => {
         setIsLogoutAlertOpen(true);
@@ -86,10 +88,10 @@ export default function Settings() {
             const response = await apiService.put(`/users/${user.id}`, data);
             setUser(response.data.data);
             setIsProfileDialogOpen(false);
-            toast.success('Profile updated successfully');
+            toast.success(t('settings.profile_updated'));
         } catch (error) {
             console.error('Error updating profile:', error);
-            toast.error('Failed to update profile');
+            toast.error(t('settings.failed_to_update_profile'));
         }
     };
 
@@ -97,10 +99,10 @@ export default function Settings() {
         try {
             await apiService.put(`/users/${user.id}`, data);
             setIsPasswordDialogOpen(false);
-            toast.success('Password changed successfully');
+            toast.success(t('settings.password_changed'));
         } catch (error) {
             console.error('Error changing password:', error);
-            toast.error('Failed to change password');
+            toast.error(t('settings.failed_to_change_password'));
         }
     };
 
@@ -121,10 +123,10 @@ export default function Settings() {
             await db.delete('auth', STORAGE_KEYS.USER_DATA);
             window.dispatchEvent(new CustomEvent('auth-changed'));
             router.visit('/welcome');
-            toast.success('Account deleted successfully');
+            toast.success(t('settings.account_deleted'));
         } catch (error) {
             console.error('Error deleting account:', error);
-            toast.error('Failed to delete account');
+            toast.error(t('settings.failed_to_delete_account'));
         }
     };
 
@@ -133,8 +135,8 @@ export default function Settings() {
             <MainLayout>
                 <div className="listener-page">
                     <div className="listener-header">
-                        <h1>Profile</h1>
-                        <p>Loading...</p>
+                        <h1>{t('profile.title')}</h1>
+                        <p>{t('common.loading')}</p>
                     </div>
                 </div>
             </MainLayout>
@@ -144,8 +146,8 @@ export default function Settings() {
         <MainLayout>
             <div className="listener-page">
                 <div className="listener-header">
-                    <h1>Profile</h1>
-                    <p>Manage your account settings and preferences</p>
+                    <h1>{t('profile.title')}</h1>
+                    <p>{t('profile.settings')}</p>
                 </div>
 
                 <div className="settings-content">
@@ -160,14 +162,14 @@ export default function Settings() {
                                 <p className="luxury-user-email">{user.email}</p>
                             </div>
                             <div className={`luxury-badge ${user.is_premium ? 'premium' : 'free'}`}>
-                                {user.is_premium ? '✦ Premium' : 'Free'}
+                                {user.is_premium ? `✦ ${t('album.premium')}` : t('settings.free')}
                             </div>
                         </div>
 
                         <div className="luxury-card-body">
                             <div className="luxury-info-grid">
                                 <div className="luxury-info-item">
-                                    <span className="luxury-info-label">Member Since</span>
+                                    <span className="luxury-info-label">{t('profile.member_since')}</span>
                                     <span className="luxury-info-value">{new Date(user.created_at).toLocaleDateString()}</span>
                                 </div>
                             </div>
@@ -175,10 +177,10 @@ export default function Settings() {
 
                         <div className="luxury-card-footer">
                             <button onClick={handleEditProfile} className="luxury-button luxury-button-primary">
-                                <span>✎</span> Edit Profile
+                                <span>✎</span> {t('profile.edit')}
                             </button>
                             <button onClick={handleEditPassword} className="luxury-button luxury-button-secondary">
-                                <span>🔒</span> Change Password
+                                <span>🔒</span> {t('profile.change_password')}
                             </button>
                         </div>
                     </div>
@@ -191,9 +193,9 @@ export default function Settings() {
                                     <span className="luxury-icon">💎</span>
                                 </div>
                                 <div className="luxury-user-info">
-                                    <h2 className="luxury-card-title">Subscription</h2>
+                                    <h2 className="luxury-card-title">{t('settings.subscription')}</h2>
                                     <p className="luxury-card-subtitle">
-                                        Upgrade to unlock all features
+                                        {t('settings.upgrade_unlock')}
                                     </p>
                                 </div>
                             </div>
@@ -201,10 +203,10 @@ export default function Settings() {
                             <div className="luxury-card-body">
                                 <div className="luxury-upgrade-cta">
                                     <p className="luxury-upgrade-text">
-                                        Unlock unlimited streaming, downloads, and exclusive content
+                                        {t('settings.upgrade_text')}
                                     </p>
                                     <button onClick={() => setIsSubscriptionDialogOpen(true)} className="luxury-button luxury-button-gold">
-                                        <span>✦</span> Upgrade to Premium
+                                        <span>✦</span> {t('settings.upgrade_premium')}
                                     </button>
                                 </div>
                             </div>
@@ -218,8 +220,8 @@ export default function Settings() {
                                 <span className="luxury-icon">⚙️</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">System Preferences</h2>
-                                <p className="luxury-card-subtitle">Customize your experience</p>
+                                <h2 className="luxury-card-title">{t('settings.system_preferences')}</h2>
+                                <p className="luxury-card-subtitle">{t('settings.customize_experience')}</p>
                             </div>
                         </div>
 
@@ -237,18 +239,18 @@ export default function Settings() {
                                 <span className="luxury-icon">💬</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Feedback</h2>
-                                <p className="luxury-card-subtitle">Share your thoughts with us</p>
+                                <h2 className="luxury-card-title">{t('settings.feedback')}</h2>
+                                <p className="luxury-card-subtitle">{t('settings.share_thoughts')}</p>
                             </div>
                         </div>
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text" style={{ color: 'var(--text-secondary)' }}>
-                                Help us improve Acapella by sharing your feedback, reporting bugs, or suggesting features.
+                                {t('settings.feedback_help')}
                             </p>
                         </div>
                         <div className="luxury-card-footer">
                             <button onClick={() => router.visit('/feedback')} className="luxury-button luxury-button-primary">
-                                <FaRegEnvelope /> Submit Feedback
+                                <FaRegEnvelope /> {t('settings.submit_feedback')}
                             </button>
                         </div>
                     </div>
@@ -260,20 +262,20 @@ export default function Settings() {
                                 <span className="luxury-icon">☕</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Support Us</h2>
-                                <p className="luxury-card-subtitle">Help us improve Acapella</p>
+                                <h2 className="luxury-card-title">{t('settings.support_us')}</h2>
+                                <p className="luxury-card-subtitle">{t('settings.help_improve')}</p>
                             </div>
                         </div>
 
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text" style={{ color: 'var(--text-secondary)' }}>
-                                Buy us a coffee or make a donation. Every contribution helps cover server costs and supports our artists. Asante sana! 🙏
+                                {t('settings.donate_text')}
                             </p>
                         </div>
 
                         <div className="luxury-card-footer">
                             <button onClick={() => router.visit('/donate')} className="luxury-button luxury-button-gold">
-                                <span>❤</span> Buy Us a Coffee
+                                <span>❤</span> {t('settings.buy_coffee')}
                             </button>
                         </div>
                     </div>
@@ -285,20 +287,20 @@ export default function Settings() {
                                 <span className="luxury-icon">⚠️</span>
                             </div>
                             <div className="luxury-user-info">
-                                <h2 className="luxury-card-title">Danger Zone</h2>
-                                <p className="luxury-card-subtitle">Irreversible account actions</p>
+                                <h2 className="luxury-card-title">{t('settings.danger_zone')}</h2>
+                                <p className="luxury-card-subtitle">{t('settings.irreversible_actions')}</p>
                             </div>
                         </div>
 
                         <div className="luxury-card-body">
                             <p className="luxury-danger-text">
-                                Deleting your account is permanent and cannot be undone. All your data, including playlists and preferences, will be permanently removed.
+                                {t('settings.delete_warning')}
                             </p>
                         </div>
 
                         <div className="luxury-card-footer">
                             <button onClick={handleDeleteAccount} className="luxury-button luxury-button-danger-full">
-                                <span>🗑️</span> Delete Account
+                                <span>🗑️</span> {t('settings.delete_account')}
                             </button>
                         </div>
                     </div>
@@ -306,7 +308,7 @@ export default function Settings() {
                     {/* Logout Button */}
                     <div className="settings-logout-section">
                         <button onClick={handleLogout} className="luxury-button luxury-button-logout">
-                            <span>→</span> Logout
+                            <span>→</span> {t('settings.logout')}
                         </button>
                     </div>
                 </div>
@@ -356,20 +358,20 @@ export default function Settings() {
                     isOpen={isDeleteAlertOpen}
                     onClose={() => setIsDeleteAlertOpen(false)}
                     onConfirm={confirmDeleteAccount}
-                    title="Delete Account"
-                    message="Are you sure you want to delete your account? This action cannot be undone. All your data, including playlists and preferences, will be permanently removed."
-                    confirmText="Delete Account"
-                    cancelText="Cancel"
+                    title={t('settings.delete_account')}
+                    message={t('settings.delete_warning')}
+                    confirmText={t('settings.delete_account')}
+                    cancelText={t('common.cancel')}
                     type="danger"
                 />
                 <CustomAlertDialog
                     isOpen={isLogoutAlertOpen}
                     onClose={() => setIsLogoutAlertOpen(false)}
                     onConfirm={confirmLogout}
-                    title="Logout"
-                    message="Are you sure you want to logout?"
-                    confirmText="Logout"
-                    cancelText="Cancel"
+                    title={t('settings.logout_confirm_title')}
+                    message={t('settings.logout_confirm')}
+                    confirmText={t('settings.logout')}
+                    cancelText={t('common.cancel')}
                     type="primary"
                 />
             </div>

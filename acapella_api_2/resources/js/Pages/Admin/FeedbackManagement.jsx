@@ -4,8 +4,10 @@ import { router } from '@inertiajs/react';
 import apiService from '../../Services/apiService';
 import { FaEye, FaStar } from 'react-icons/fa';
 import '../../../css/feedback.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function FeedbackManagement() {
+    const { t } = useTranslation();
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState('');
@@ -42,43 +44,43 @@ export default function FeedbackManagement() {
         <MainLayout>
             <div className="fb-page">
                 <div className="fb-hero" style={{ textAlign: 'left', marginBottom: 24 }}>
-                    <h1 style={{ fontSize: '2rem' }}>Feedback Management</h1>
-                    <p>Review and respond to user feedback.</p>
+                    <h1 style={{ fontSize: '2rem' }}>{t('admin.feedback_management')}</h1>
+                    <p>{t('admin.review_respond_feedback')}</p>
                 </div>
 
                 <div className="fb-toolbar">
-                    <input className="fb-input" placeholder="Search subject or user…" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <input className="fb-input" placeholder={t('admin.search_subject_user')} value={search} onChange={(e) => setSearch(e.target.value)} />
                     <select className="fb-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-                        <option value="">All statuses</option>
-                        <option value="new">New</option>
-                        <option value="in_review">In Review</option>
-                        <option value="resolved">Resolved</option>
-                        <option value="closed">Closed</option>
+                        <option value="">{t('admin.all_statuses')}</option>
+                        <option value="new">{t('admin.new')}</option>
+                        <option value="in_review">{t('admin.in_review')}</option>
+                        <option value="resolved">{t('admin.resolved')}</option>
+                        <option value="closed">{t('admin.closed')}</option>
                     </select>
                     <select className="fb-select" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-                        <option value="">All categories</option>
-                        <option value="bug">Bug</option>
-                        <option value="feature">Feature</option>
-                        <option value="general">General</option>
-                        <option value="complaint">Complaint</option>
-                        <option value="praise">Praise</option>
+                        <option value="">{t('admin.all_categories')}</option>
+                        <option value="bug">{t('admin.bug')}</option>
+                        <option value="feature">{t('admin.feature')}</option>
+                        <option value="general">{t('admin.general')}</option>
+                        <option value="complaint">{t('admin.complaint')}</option>
+                        <option value="praise">{t('admin.praise')}</option>
                     </select>
                 </div>
 
                 {loading ? (
-                    <div className="fb-empty">Loading…</div>
+                    <div className="fb-empty">{t('admin.loading')}</div>
                 ) : filtered.length === 0 ? (
-                    <div className="fb-empty">No feedback found.</div>
+                    <div className="fb-empty">{t('admin.no_feedback_found')}</div>
                 ) : (
                     <table className="fb-table">
                         <thead>
                             <tr>
-                                <th>Subject</th>
-                                <th className="hide-mobile">User</th>
-                                <th>Category</th>
-                                <th className="hide-mobile">Rating</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>{t('admin.subject')}</th>
+                                <th className="hide-mobile">{t('admin.user')}</th>
+                                <th>{t('admin.category')}</th>
+                                <th className="hide-mobile">{t('admin.rating')}</th>
+                                <th>{t('admin.status')}</th>
+                                <th>{t('admin.actions')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,7 +99,7 @@ export default function FeedbackManagement() {
                                             style={{ padding: '6px 12px', fontSize: '0.85rem' }}
                                             onClick={() => router.visit(`/admin/feedbacks/${f.id}`)}
                                         >
-                                            <FaEye /> View
+                                            <FaEye /> {t('admin.view')}
                                         </button>
                                     </td>
                                 </tr>

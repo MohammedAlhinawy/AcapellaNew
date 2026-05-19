@@ -8,9 +8,11 @@ import MainLayout from '../../Layout/MainLayout';
 import SheetTrackDropdown from '../../Components/SheetTrackDropdown';
 import { FaPlay, FaPause } from 'react-icons/fa6';
 import { useAudio } from '../../Context/AudioContext';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function AlbumView({ album, tracks }) {
     const { isPlaying, togglePlay, playAllTracks, currentTrack } = useAudio();
+    const { t } = useTranslation();
 
     const { props } = usePage();
     const [albumData, setAlbumData] = useState(album);
@@ -64,7 +66,7 @@ export default function AlbumView({ album, tracks }) {
     if (loading) {
         return (
             <div className="listener-page">
-                <div className="loading-state">Loading album...</div>
+                <div className="loading-state">{t('album.loading')}</div>
             </div>
         );
     }
@@ -81,9 +83,9 @@ export default function AlbumView({ album, tracks }) {
                         )}
                     </div>
                     <div className="album-info">
-                        <h1 className="album-title">{albumData?.title || 'Album Name'}</h1>
-                        <p className="album-year">Playlist • {albumData?.year || '2024'}</p>
-                        <p className="album-year">{tracksData?.length || 0} songs</p>
+                        <h1 className="album-title">{albumData?.title || t('album.album_name')}</h1>
+                        <p className="album-year">{t('album.playlist')} • {albumData?.year || '2024'}</p>
+                        <p className="album-year">{tracksData?.length || 0} {t('album.songs')}</p>
                         {/* Choir Description */}
                     </div>
                     <div className='album-controls'>
@@ -111,12 +113,12 @@ export default function AlbumView({ album, tracks }) {
                                 </div>
                                 <span className="track-number" style={{ display: 'none' }}>{index + 1}</span>
                                 <div className="track-info">
-                                    <span className="track-name">{track?.title || 'Unknown Track'}</span>
-                                    <span className="track-album">{albumData?.title || 'Unknown Album'} • <span className="track-duration" >{track?.duration_label || '0:00'}</span></span>
+                                    <span className="track-name">{track?.title || t('album.unknown_track')}</span>
+                                    <span className="track-album">{albumData?.title || t('album.unknown_album')} • <span className="track-duration" >{track?.duration_label || '0:00'}</span></span>
                                 </div>
                                 
                                 {track?.is_premium && (
-                                    <span className="premium-badge">Premium</span>
+                                    <span className="premium-badge">{t('album.premium')}</span>
                                 )}
                                 
                                 <SheetTrackDropdown 

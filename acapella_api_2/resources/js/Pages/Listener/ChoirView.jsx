@@ -8,9 +8,11 @@ import trackService from '../../Services/trackService';
 import { toast } from '../../Components/ToastContainer';
 import SheetTrackDropdown from '../../Components/SheetTrackDropdown';
 import '../../../css/listener.css';
+import useTranslation from '../../hooks/useTranslation';
 
 export default function ChoirView() {
     const { props } = usePage();
+    const { t } = useTranslation();
     const [choir, setChoir] = useState(null);
     const [albums, setAlbums] = useState([]);
     const [tracks, setTracks] = useState([]);
@@ -44,7 +46,7 @@ export default function ChoirView() {
                 setTracks(tracksResponse.data || tracksResponse);
             } catch (error) {
                 console.error('Error fetching choir data:', error);
-                toast.error('Failed to load choir');
+                toast.error(t('choir.failed_to_load'));
             } finally {
                 setLoading(false);
             }
@@ -54,13 +56,13 @@ export default function ChoirView() {
             fetchChoirData();
         }
         // eslint-disable-next-line react/prop-types
-    }, [props.choirId]);
+    }, [props.choirId, t]);
 
     if (loading) {
         return (
             <MainLayout>
                 <div className="listener-page">
-                    <div className="loading-state">Loading choir...</div>
+                    <div className="loading-state">{t('choir.loading')}</div>
                 </div>
             </MainLayout>
         );
@@ -71,7 +73,7 @@ export default function ChoirView() {
             <MainLayout>
                 <div className="listener-page">
                     <div className="empty-state">
-                        <p>Choir not found</p>
+                        <p>{t('choir.not_found')}</p>
                     </div>
                 </div>
             </MainLayout>
@@ -98,14 +100,14 @@ export default function ChoirView() {
                         <div className="choir-name">
                             <h1>{choir.name}</h1>
                         </div>
-                        <p className="choir-location">{choir.location || 'Unknown Location'}</p>
-                        <p className="choir-bio">{choir.description || 'No description available'}</p>
+                        <p className="choir-location">{choir.location || t('choir.unknown_location')}</p>
+                        <p className="choir-bio">{choir.description || t('choir.no_description')}</p>
                     </div>
                 </div>
 
                 <div className="choir-content">
                     <div className="section">
-                        <h2 className="section-title">Albums</h2>
+                        <h2 className="section-title">{t('choir.albums')}</h2>
                         <div className="card-grid">
                             {albums.length > 0 ? (
                                 albums.map((album) => (
@@ -130,14 +132,14 @@ export default function ChoirView() {
                                 ))
                             ) : (
                                 <div className="empty-state">
-                                    <p>No albums available</p>
+                                    <p>{t('choir.no_albums')}</p>
                                 </div>
                             )}
                         </div>
                     </div>
 
                     <div className="section track">
-                        <h2 className="section-title">Top Tracks</h2>
+                        <h2 className="section-title">{t('choir.top_tracks')}</h2>
                         <div className="track-list">
                             {tracks.length > 0 ? (
                                 tracks.map((track, index) => (
@@ -153,12 +155,12 @@ export default function ChoirView() {
                                         </div>
                                         <span className="track-number" style={{ display: 'none' }}>{index + 1}</span>
                                         <div className="track-info">
-                                            <span className="track-name">{track?.title || 'Unknown Track'}</span>
-                                            <span className="track-album">{track.album?.title || 'Unknown Album'} • <span className="track-duration">{track?.duration_label || '0:00'}</span></span>
+                                            <span className="track-name">{track?.title || t('album.unknown_track')}</span>
+                                            <span className="track-album">{track.album?.title || t('album.unknown_album')} • <span className="track-duration">{track?.duration_label || '0:00'}</span></span>
                                         </div>
                                         
                                         {track?.is_premium && (
-                                            <span className="premium-badge">Premium</span>
+                                            <span className="premium-badge">{t('album.premium')}</span>
                                         )}
                                         
                                         <SheetTrackDropdown 
@@ -172,7 +174,7 @@ export default function ChoirView() {
                                 ))
                             ) : (
                                 <div className="empty-state">
-                                    <p>No tracks available</p>
+                                    <p>{t('choir.no_tracks')}</p>
                                 </div>
                             )}
                         </div>
